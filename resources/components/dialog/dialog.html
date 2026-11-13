@@ -1,0 +1,8 @@
+<a class="{{ $style === 'arrow' ? 'fe-link-arrow' : 'fe-button' . ($style === 'outline' ? ' fe-button--outline' : '') }}{{ $class !== '' ? ' ' . $class : '' }}" href="#{{ $dialog_id }}" data-fe-dialog-open="{{ $dialog_id }}" aria-haspopup="dialog">{{ $label }}@if($style === 'arrow'){!! site_icon('arrow-right', ['size' => 16]) !!}@endif</a>
+<dialog class="fe-dialog" id="{{ $dialog_id }}" aria-labelledby="{{ $dialog_id }}-title" data-fe="dialog">
+<div class="fe-dialog__head">
+<h2 class="fe-h3" id="{{ $dialog_id }}-title">{{ $title }}</h2>
+<a class="fe-icon-button" href="#" data-fe-dialog-close aria-label="{{ site_text('dialog.close') }}">{!! site_icon('close', ['size' => 20]) !!}</a>
+</div>
+<div class="fe-dialog__body">{!! $slot !!}</div>
+</dialog>

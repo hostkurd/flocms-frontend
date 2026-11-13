@@ -1,0 +1,16 @@
+@if($style === 'list')
+<ul class="fe-languages fe-languages--list" aria-label="{{ site_text('language.choose') }}">
+@foreach($languages as $language)
+<li><a href="{{ $language['url'] }}" lang="{{ $language['code'] }}" dir="{{ $language['dir'] }}" hreflang="{{ $language['code'] }}"@if($language['current']) aria-current="true"@endif>{{ $language['name'] }}</a></li>
+@endforeach
+</ul>
+@else
+<details class="fe-languages" data-fe-sub>
+<summary class="fe-languages__button" aria-label="{{ site_text('language.label') }}: {{ $current_name }}">{!! site_icon('globe', ['size' => 16]) !!}<span>{{ strtoupper($current_code) }}</span></summary>
+<ul class="fe-languages__menu">
+@foreach($languages as $language)
+<li><a href="{{ $language['url'] }}" lang="{{ $language['code'] }}" dir="{{ $language['dir'] }}" hreflang="{{ $language['code'] }}"@if($language['current']) aria-current="true"@endif>{{ $language['name'] }}@if($language['current']){!! site_icon('check', ['size' => 16]) !!}@endif</a></li>
+@endforeach
+</ul>
+</details>
+@endif

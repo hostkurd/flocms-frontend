@@ -1,0 +1,6 @@
+<form class="fe-theme-switch" method="post" action="{{ site_url('/site-ui/theme') }}" data-fe="theme-switch" data-fe-path="{{ $cookie_path }}">
+{!! \FloCMS\Core\Csrf::field() !!}
+<input type="hidden" name="return" value="{{ $return_to }}">
+<button type="submit" name="theme" value="dark" class="fe-icon-button fe-theme-switch__to-dark" aria-label="{{ site_text('theme.to_dark') }}" title="{{ site_text('theme.to_dark') }}">{!! site_icon('moon', ['size' => 18]) !!}</button>
+<button type="submit" name="theme" value="light" class="fe-icon-button fe-theme-switch__to-light" aria-label="{{ site_text('theme.to_light') }}" title="{{ site_text('theme.to_light') }}">{!! site_icon('sun', ['size' => 18]) !!}</button>
+</form>

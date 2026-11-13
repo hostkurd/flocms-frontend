@@ -1,0 +1,16 @@
+<section class="fe-section fe-section--{{ $tone }} fe-cards{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container">
+@if($heading !== '' || $intro !== '')
+<div class="fe-section__head"><div>
+@if($heading !== '')<h2>{{ $heading }}</h2>@endif
+@if($intro !== '')<p class="fe-lead">{{ $intro }}</p>@endif
+</div></div>
+@endif
+<div class="fe-grid" style="--fe-columns:{{ (int) $columns }}">
+@foreach($items as $item)
+{!! component('card', ['heading' => $item['heading'], 'text' => $item['text'], 'link' => $item['link'], 'image' => $photos ? $item['image'] : null, 'placeholder' => $photos]) !!}
+@endforeach
+</div>
+{!! $slot !!}
+</div>
+</section>

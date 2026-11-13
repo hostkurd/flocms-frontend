@@ -1,0 +1,8 @@
+.fe-accordion{border-block-start:1px solid var(--fe-line)}
+.fe-accordion__item{border-block-end:1px solid var(--fe-line)}
+.fe-accordion__question{display:flex;align-items:center;justify-content:space-between;gap:24px;min-block-size:64px;padding-block:16px;font-size:1.0625rem;font-weight:500;cursor:pointer;list-style:none}
+.fe-accordion__question::-webkit-details-marker{display:none}
+.fe-accordion__question:hover{color:var(--fe-link)}
+.fe-accordion__sign{display:inline-flex;color:var(--fe-muted);transition:transform .2s}
+.fe-accordion__item[open] .fe-accordion__sign{transform:rotate(45deg)}
+.fe-accordion__answer{padding-block-end:20px;color:var(--fe-muted);max-inline-size:72ch}

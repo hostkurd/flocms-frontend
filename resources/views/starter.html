@@ -1,0 +1,56 @@
+{!! site_html() !!}
+<head>
+<?php site_seo()->title(site_text('starter.title'))->noindex(); ?>
+{!! site_head() !!}
+<style>
+.fe-starters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0;padding:0;list-style:none}
+.fe-starter{display:flex;flex-direction:column;gap:16px;padding:16px;border:1px solid var(--fe-line);border-radius:var(--fe-radius);background:var(--fe-background)}
+.fe-starter:focus-within{border-color:var(--fe-brand)}
+.fe-starter__preview{display:flex;flex-direction:column;gap:5px;aspect-ratio:4/3;padding:10px;border:1px solid var(--fe-line);border-radius:var(--fe-radius);background:var(--fe-background);overflow:hidden}
+.fe-starter__preview span{display:block;border-radius:2px;background:var(--fe-surface);border:1px solid var(--fe-line);flex:1}
+.fe-starter__preview .is-nav{flex:0 0 10px;background:transparent;border:0;border-block-end:1px solid var(--fe-line);border-radius:0}
+.fe-starter__preview .is-hero{flex:2.2}
+.fe-starter__preview .is-slider{flex:2.6;background:var(--fe-band);border-color:var(--fe-band)}
+.fe-starter__preview .is-call-to-action,.fe-starter__preview .is-foot{background:var(--fe-band);border-color:var(--fe-band)}
+.fe-starter__preview .is-foot{flex:0 0 12px}
+.fe-starter__preview .is-pricing,.fe-starter__preview .is-faq{flex:1.4}
+.fe-starter__body{display:flex;flex-direction:column;gap:6px;flex:1}
+.fe-starter__body h2{font-size:1.125rem}
+.fe-starter__note{margin-block-start:8px;font-size:.875rem;color:var(--fe-muted)}
+@media (max-width:900px){.fe-starters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.fe-starters{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<main id="main" class="fe-section">
+<div class="fe-container">
+<div class="fe-section__head"><div>
+<h1 class="fe-h2">{{ site_text('starter.title') }}</h1>
+<p class="fe-lead">{{ site_text('starter.intro') }}</p>
+<p class="fe-starter__note">{!! site_icon('info', ['size' => 16]) !!} {{ site_text('starter.only_you') }}</p>
+</div></div>
+@if(\FloCMS\Core\Session::hasFlash())
+<?php $flash = \FloCMS\Core\Session::getFlash(); ?>
+{!! component('alert', ['tone' => in_array($flash['type'] ?? '', ['success', 'warning', 'danger'], true) ? $flash['type'] : 'info', 'text' => (string) ($flash['message'] ?? '')]) !!}
+<br>
+@endif
+<ul class="fe-starters">
+@foreach($starters as $starter)
+<li class="fe-starter">
+<div class="fe-starter__preview" aria-hidden="true"><span class="is-nav"></span>@foreach($starter['sections'] as $section)<span class="is-{{ $section }}"></span>@endforeach<span class="is-foot"></span></div>
+<div class="fe-starter__body">
+<h2>{{ $starter['label'] }}</h2>
+<p class="fe-muted">{{ $starter['text'] }}</p>
+</div>
+<form method="post" action="{{ $action }}">
+{!! \FloCMS\Core\Csrf::field() !!}
+<button type="submit" name="starter" value="{{ $starter['name'] }}" class="fe-button fe-button--block{{ $starter['name'] === 'studio' ? '' : ' fe-button--outline' }}">{{ site_text('starter.choose') }}</button>
+</form>
+</li>
+@endforeach
+</ul>
+</div>
+</main>
+{!! site_foot() !!}
+</body>
+</html>

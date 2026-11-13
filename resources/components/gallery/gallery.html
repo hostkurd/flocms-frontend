@@ -1,0 +1,21 @@
+<div class="fe-gallery{{ $class !== '' ? ' ' . $class : '' }}" id="{{ $gallery_id }}" data-fe="gallery">
+@if($heading !== '')<h2 class="fe-gallery__heading">{{ $heading }}</h2>@endif
+<ul class="fe-gallery__grid" style="--fe-columns:{{ (int) $columns }}">
+@foreach($images as $i => $item)
+@if($item['image']['src'] !== '')
+<li>
+<figure>
+<a class="fe-media fe-ratio-{{ $ratio }}" href="{{ $item['image']['src'] }}" data-fe-gallery-item aria-label="{{ site_text('gallery.open', ['number' => site_number($i + 1)]) }}"><img src="{{ $item['image']['src'] }}" alt="{{ $item['image']['alt'] !== '' ? $item['image']['alt'] : $item['caption'] }}" loading="lazy"></a>
+@if($item['caption'] !== '')<figcaption>{{ $item['caption'] }}</figcaption>@endif
+</figure>
+</li>
+@endif
+@endforeach
+</ul>
+<dialog class="fe-lightbox" aria-label="{{ $heading !== '' ? $heading : site_text('components.gallery') }}" data-fe-lightbox>
+<button type="button" class="fe-lightbox__close" data-fe-lightbox-close aria-label="{{ site_text('gallery.close') }}">{!! site_icon('close', ['size' => 22]) !!}</button>
+<button type="button" class="fe-lightbox__step fe-lightbox__prev" data-fe-lightbox-prev aria-label="{{ site_text('gallery.previous') }}">{!! site_icon('chevron-left', ['size' => 26]) !!}</button>
+<figure class="fe-lightbox__figure"><img alt="" data-fe-lightbox-image><figcaption data-fe-lightbox-caption></figcaption></figure>
+<button type="button" class="fe-lightbox__step fe-lightbox__next" data-fe-lightbox-next aria-label="{{ site_text('gallery.next') }}">{!! site_icon('chevron-right', ['size' => 26]) !!}</button>
+</dialog>
+</div>

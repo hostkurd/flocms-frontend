@@ -1,0 +1,13 @@
+<section class="fe-section fe-section--band fe-cta{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container fe-cta__inner">
+<div class="fe-cta__text">
+<h2>{{ $heading }}</h2>
+@if($text !== '')<p class="fe-lead">{{ $text }}</p>@endif
+</div>
+<div class="fe-actions">
+@if($primary['url'] !== '' && $primary['label'] !== '')<a class="fe-button fe-button--large" href="{{ $primary['url'] }}"@if($primary['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $primary['label'] }}</a>@endif
+@if($secondary['url'] !== '' && $secondary['label'] !== '')<a class="fe-link-arrow" href="{{ $secondary['url'] }}"@if($secondary['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $secondary['label'] }}{!! site_icon('arrow-right', ['size' => 16]) !!}</a>@endif
+{!! $slot !!}
+</div>
+</div>
+</section>

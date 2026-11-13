@@ -1,0 +1,79 @@
+{
+    "name": "hostkurd/flocms-frontend",
+    "description": "The public side of a FloCMS website: components written once and used in templates and as Builder blocks, a site style generated in PHP, RTL and Arabic/Kurdish, menus and SEO.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "flocms",
+        "frontend",
+        "components",
+        "website",
+        "multilingual",
+        "rtl"
+    ],
+    "homepage": "https://github.com/hostkurd/flocms-frontend",
+    "authors": [
+        {
+            "name": "HostKurd"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/hostkurd/flocms-frontend/issues",
+        "source": "https://github.com/hostkurd/flocms-frontend",
+        "docs": "https://github.com/hostkurd/flocms-frontend#readme"
+    },
+    "require": {
+        "php": "^8.1",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-dom": "*",
+        "hostkurd/flocms-core": "^2.10.0"
+    },
+    "require-dev": {
+        "hostkurd/flocms-admin": "^0.43.0",
+        "hostkurd/flocms-cli": "^2.0.1",
+        "phpunit/phpunit": "^10.5 || ^11.0"
+    },
+    "suggest": {
+        "hostkurd/flocms-admin": "Components as Builder blocks, the Site style settings page and one sitemap (0.43 or later)",
+        "hostkurd/flocms-uploader": "Photos and files in components and, later, in site forms",
+        "ext-intl": "Numbers and dates formatted by PHP's intl (the package's own tables are used without it)"
+    },
+    "conflict": {
+        "hostkurd/flocms-admin": "<0.43.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FloCMS\\Frontend\\": "src/"
+        },
+        "files": [
+            "bootstrap.php",
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FloCMS\\Frontend\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "flocms": {
+            "commands": [
+                "FloCMS\\Frontend\\Console\\InstallCommand",
+                "FloCMS\\Frontend\\Console\\MakeComponentCommand",
+                "FloCMS\\Frontend\\Console\\StyleCommand",
+                "FloCMS\\Frontend\\Console\\StarterCommand",
+                "FloCMS\\Frontend\\Console\\DoctorCommand",
+                "FloCMS\\Frontend\\Console\\ComponentsCommand"
+            ]
+        },
+        "branch-alias": {
+            "dev-main": "0.1-dev"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

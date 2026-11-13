@@ -1,0 +1,4 @@
+.fe-faq__inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:var(--fe-space-7) 64px;align-items:start}
+.fe-faq__head{display:flex;flex-direction:column;gap:16px}
+.fe-faq__inner>.fe-accordion:only-child{grid-column:1/-1}
+@media (max-width:900px){.fe-faq__inner{grid-template-columns:minmax(0,1fr)}}

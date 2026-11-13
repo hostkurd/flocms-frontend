@@ -1,0 +1,5 @@
+.fe-grid{display:grid;grid-template-columns:repeat(var(--fe-columns,3),minmax(0,1fr));gap:var(--fe-grid-gap,var(--fe-space-6))}
+.fe-grid--gap-small{--fe-grid-gap:var(--fe-space-4)}
+.fe-grid--gap-large{--fe-grid-gap:var(--fe-space-7)}
+@media (max-width:960px){.fe-grid{grid-template-columns:repeat(min(var(--fe-columns,3),2),minmax(0,1fr))}}
+@media (max-width:600px){.fe-grid{grid-template-columns:minmax(0,1fr)}}

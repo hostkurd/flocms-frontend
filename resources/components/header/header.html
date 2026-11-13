@@ -1,0 +1,60 @@
+<header class="fe-header{{ $sticky ? ' fe-header--sticky' : '' }}{{ $class !== '' ? ' ' . $class : '' }}" data-fe="header">
+<a class="fe-skip" href="#main">{{ site_text('skip') }}</a>
+<div class="fe-container fe-header__bar">
+<a class="fe-header__brand" href="{{ $home }}">
+@if($logo_image !== null)<img src="{{ $logo_image['src'] }}" alt="" height="28" class="fe-header__logo">@else{!! \FloCMS\Frontend\Support\Logo::svg(28) !!}@endif
+<span>{{ $site_name }}</span>
+</a>
+<nav class="fe-header__nav" aria-label="{{ site_text('menu.main') }}">
+<ul class="fe-header__menu">
+@foreach($items as $item)
+<li class="fe-header__item">
+@if($item['children'] !== [])
+<details class="fe-header__sub" data-fe-sub>
+<summary class="fe-header__link{{ $item['active'] ? ' is-active' : '' }}">{{ $item['label'] }}{!! site_icon('chevron-down', ['size' => 14, 'stroke' => 1.8]) !!}</summary>
+<ul class="fe-header__dropdown">
+@if($item['url'] !== '#' && $item['url'] !== '')<li><a href="{{ $item['url'] }}"@if($item['current']) aria-current="page"@endif>{{ $item['label'] }}</a></li>@endif
+@foreach($item['children'] as $child)
+<li><a href="{{ $child['url'] }}"@if($child['current']) aria-current="page"@endif@if($child['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $child['label'] }}</a></li>
+@endforeach
+</ul>
+</details>
+@else
+<a class="fe-header__link{{ $item['active'] ? ' is-active' : '' }}" href="{{ $item['url'] }}"@if($item['current']) aria-current="page"@endif@if($item['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $item['label'] }}</a>
+@endif
+</li>
+@endforeach
+</ul>
+</nav>
+<div class="fe-header__tools">
+@if($show_languages){!! component('language-switcher') !!}@endif
+@if($show_theme){!! component('theme-switch') !!}@endif
+@if($button['url'] !== '' && $button['label'] !== '')<a class="fe-button fe-header__cta" href="{{ $button['url'] }}"@if($button['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $button['label'] }}</a>@endif
+</div>
+<details class="fe-header__mobile" data-fe-mobile>
+<summary class="fe-icon-button fe-header__toggle"><span class="fe-header__toggle-open">{!! site_icon('menu', ['size' => 22, 'label' => site_text('menu.open'), 'stroke' => 1.8]) !!}</span><span class="fe-header__toggle-close">{!! site_icon('close', ['size' => 22, 'label' => site_text('menu.close'), 'stroke' => 1.8]) !!}</span></summary>
+<div class="fe-header__panel">
+<nav aria-label="{{ site_text('menu.main') }}">
+<ul class="fe-header__mobile-menu">
+@foreach($items as $item)
+<li><a href="{{ $item['url'] }}"@if($item['current']) aria-current="page"@endif>{{ $item['label'] }}</a>
+@if($item['children'] !== [])
+<ul>
+@foreach($item['children'] as $child)
+<li><a href="{{ $child['url'] }}"@if($child['current']) aria-current="page"@endif>{{ $child['label'] }}</a></li>
+@endforeach
+</ul>
+@endif
+</li>
+@endforeach
+</ul>
+</nav>
+<div class="fe-header__mobile-tools">
+@if($show_languages){!! component('language-switcher', ['style' => 'list']) !!}@endif
+@if($show_theme){!! component('theme-switch') !!}@endif
+</div>
+@if($button['url'] !== '' && $button['label'] !== '')<a class="fe-button fe-button--block" href="{{ $button['url'] }}">{{ $button['label'] }}</a>@endif
+</div>
+</details>
+</div>
+</header>

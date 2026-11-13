@@ -1,0 +1,7 @@
+.fe-theme-switch{display:inline-flex;margin:0}
+.fe-theme-switch__to-light{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fe-theme-switch__to-dark{display:none}:root:not([data-theme="light"]) .fe-theme-switch__to-light{display:inline-flex}}
+:root[data-theme="dark"] .fe-theme-switch__to-dark{display:none}
+:root[data-theme="dark"] .fe-theme-switch__to-light{display:inline-flex}
+:root[data-theme="light"] .fe-theme-switch__to-light{display:none}
+:root[data-theme="light"] .fe-theme-switch__to-dark{display:inline-flex}

@@ -1,0 +1,31 @@
+<?php
+// The Site Style of this template: the whole look of the site from these values.
+// php flo site:style --check reports colour pairs that are hard to read.
+// flocms-admin's Settings → Site style, when installed, overrides them.
+
+return [
+    'colours' => [
+        'brand' => '#0A7FA8',        // buttons and links
+        'accent' => '#38BBE0',       // buttons on the navy band and in dark mode (with dark text)
+        'text' => '#0E1A24',
+        'muted' => '#56616C',        // secondary text
+        'background' => '#FFFFFF',
+        'surface' => '#F6F8FA',      // the grey rows
+        'band' => '#0C2233',         // the navy closing band and the footer
+        'line' => '#E4E7EB',
+        'line_strong' => '#CDD3DA',
+    ],
+    // Dark mode colours are worked out from the ones above; set any of them here:
+    // 'dark_colours' => ['background' => '#0B0F14', 'surface' => '#10151B', 'brand' => '#38BBE0', 'link' => '#5FCBEA'],
+    'dark' => 'switch',              // switch (a light/dark button) | auto (follow the device) | light | dark
+    'fonts' => [
+        'latin' => 'Instrument Sans',
+        'arabic' => 'Noto Sans Arabic', // Arabic and Kurdish (Sorani)
+        // 'headings' => 'Instrument Sans',
+    ],
+    // Fonts of your own, from public/themes/<template>/:
+    // 'font_files' => [['family' => 'Vazirmatn', 'file' => 'fonts/vazirmatn.woff2', 'weight' => '100 900', 'range' => 'U+0600-06FF']],
+    'radius' => 'small',             // none | small (4 px) | medium | large | round
+    'spacing' => 'comfortable',      // compact | comfortable | roomy
+    'width' => 1200,                 // the page's content width, px
+];

@@ -1,0 +1,29 @@
+<section class="fe-section fe-section--{{ $tone }} fe-pricing{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container">
+@if($heading !== '' || $intro !== '')
+<div class="fe-section__head"><div>
+@if($heading !== '')<h2>{{ $heading }}</h2>@endif
+@if($intro !== '')<p class="fe-lead">{{ $intro }}</p>@endif
+</div></div>
+@endif
+<div class="fe-pricing__plans" style="--fe-columns:{{ max(1, count($plan_list)) }}">
+@foreach($plan_list as $plan)
+<article class="fe-pricing__plan{{ $plan['highlight'] ? ' is-highlighted' : '' }}">
+@if($plan['highlight'])<span class="fe-badge fe-badge--outline fe-pricing__label">{{ $highlight_label !== '' ? $highlight_label : site_text('pricing.popular') }}</span>@endif
+<h3 class="fe-pricing__name">{{ $plan['name'] }}</h3>
+@if($plan['price'] !== '')<p class="fe-pricing__price"><span>{{ $plan['price'] }}</span>@if($plan['period'] !== '')<small>{{ $plan['period'] }}</small>@endif</p>@endif
+@if($plan['feature_list'] !== [])
+<ul class="fe-pricing__features">
+@foreach($plan['feature_list'] as $feature)
+<li>{!! site_icon('check', ['size' => 18]) !!}<span>{{ $feature }}</span></li>
+@endforeach
+</ul>
+@endif
+@if($plan['button']['url'] !== '' && $plan['button']['label'] !== '')<a class="fe-button fe-button--block{{ $plan['highlight'] ? '' : ' fe-button--outline' }}" href="{{ $plan['button']['url'] }}">{{ $plan['button']['label'] }}</a>@endif
+</article>
+@endforeach
+</div>
+@if($note !== '')<p class="fe-pricing__note fe-muted">{{ $note }}</p>@endif
+{!! $slot !!}
+</div>
+</section>

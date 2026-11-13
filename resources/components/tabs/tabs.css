@@ -1,0 +1,11 @@
+.fe-tabs__label{display:flex;align-items:center;min-block-size:48px;padding-block:12px;border-block-end:1px solid var(--fe-line);font-weight:500;cursor:pointer;list-style:none}
+.fe-tabs__label::-webkit-details-marker{display:none}
+.fe-tabs__panel[open]>.fe-tabs__label{color:var(--fe-link)}
+.fe-tabs__content{padding-block:20px}
+/* With scripts: a tab list */
+.fe-tabs__list{display:flex;gap:4px 24px;flex-wrap:wrap;border-block-end:1px solid var(--fe-line);margin-block-end:24px}
+.fe-tabs__tab{min-block-size:48px;padding:0;border:0;background:transparent;color:var(--fe-muted);font-weight:500;box-shadow:inset 0 -2px 0 transparent}
+.fe-tabs__tab[aria-selected="true"]{color:var(--fe-text);box-shadow:inset 0 -2px 0 var(--fe-text)}
+.fe-tabs__tab:hover{color:var(--fe-text)}
+.fe-tabs.is-ready .fe-tabs__panel>.fe-tabs__label{display:none}
+.fe-tabs.is-ready .fe-tabs__content{padding:0}

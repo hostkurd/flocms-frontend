@@ -1,0 +1,6 @@
+.fe-dialog{inline-size:min(560px,calc(100vw - 32px));max-block-size:calc(100dvh - 64px);padding:0;border:1px solid var(--fe-line);border-radius:var(--fe-radius-lg);background:var(--fe-background);color:var(--fe-text);box-shadow:0 24px 64px -24px rgb(14 26 36 / .35)}
+.fe-dialog::backdrop{background:rgb(11 22 32 / .55)}
+.fe-dialog__head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 16px 0 24px;padding-inline:24px 12px}
+.fe-dialog__body{padding:16px 24px 24px;overflow-y:auto}
+/* Without scripts: the dialog opens in the page as the link's target */
+.fe-no-js .fe-dialog:target{display:block;position:fixed;inset:0;margin:auto;z-index:50;block-size:fit-content}

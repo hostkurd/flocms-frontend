@@ -1,0 +1,47 @@
+<?php
+// flocms-frontend settings. Every key is optional; the comments show the defaults.
+// The look (colours, fonts, corners, dark mode) is in the active template's style.php.
+
+use FloCMS\Frontend\Menus\Menu;
+
+return [
+    // The site's name, description and contact details: header, footer, page head (Open Graph, JSON-LD).
+    'site' => [
+        // 'name' => 'FloCMS',                   // default: SITE_NAME in .env
+        // 'description' => 'Short description for search engines.',
+        // 'logo' => '/themes/site/img/logo.svg', // default: the FloCMS mark
+        // 'favicon' => '/favicon.ico',
+        // 'email' => 'info@example.com',        // default: PRIMARY_EMAIL
+        // 'phone' => '+964 750 000 0000',
+        // 'address' => '100m Street, Erbil',
+        // 'social' => ['instagram' => 'https://instagram.com/…', 'facebook' => 'https://facebook.com/…'],
+    ],
+
+    // Menus: labels are word keys (frontend.menu.home, or your lang files') or text.
+    // ->pages() adds flocms-admin's pages marked "Show in menu".
+    'menus' => [
+        'main' => fn (Menu $menu) => $menu
+            ->link('frontend.menu.home', '/')
+            ->pages(),
+        // 'footer' => fn (Menu $menu) => $menu->link('Privacy', '/privacy'),   // default: the main menu
+    ],
+
+    // The cookie notice: 'auto' shows it when a site_script() waits for consent; 'on', 'off'.
+    'cookies' => [
+        'notice' => 'auto',
+        'categories' => ['statistics', 'marketing'],
+        // 'policy' => '/privacy',
+        'days' => 180,
+    ],
+
+    // Digits per language: 'latin' (default) or 'arabic' (Arabic-Indic).
+    'digits' => [
+        // 'ku' => 'arabic',
+    ],
+
+    // Component classes of other places (the site's own components/ folder is found by itself).
+    'components' => [],
+
+    // The starter picker at /site-starter (administrators only, until one is chosen).
+    'starter' => true,
+];

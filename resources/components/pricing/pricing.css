@@ -1,0 +1,14 @@
+.fe-pricing__plans{display:grid;grid-template-columns:repeat(var(--fe-columns,3),minmax(0,1fr));gap:24px;align-items:stretch}
+.fe-pricing__plan{position:relative;display:flex;flex-direction:column;gap:20px;padding:32px;background:var(--fe-background);border:1px solid var(--fe-line);border-radius:var(--fe-radius)}
+.fe-pricing__plan.is-highlighted{border-color:var(--fe-brand);box-shadow:inset 0 0 0 1px var(--fe-brand)}
+.fe-pricing__label{position:absolute;inset-block-start:-11px;inset-inline-start:24px;background:var(--fe-background)}
+.fe-pricing__name{font-size:1.125rem}
+.fe-pricing__price{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px}
+.fe-pricing__price span{font-size:2.25rem;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.fe-script-arabic .fe-pricing__price span{letter-spacing:0}
+.fe-pricing__price small{color:var(--fe-muted);font-size:.9375rem}
+.fe-pricing__features{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;color:var(--fe-muted);flex:1 1 auto}
+.fe-pricing__features li{display:flex;gap:10px;align-items:flex-start}
+.fe-pricing__features .fe-icon{color:var(--fe-brand);margin-block-start:3px}
+.fe-pricing__note{margin-block-start:24px;font-size:.9375rem}
+@media (max-width:900px){.fe-pricing__plans{grid-template-columns:minmax(0,1fr);max-inline-size:520px}}
