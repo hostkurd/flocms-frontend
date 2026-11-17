@@ -51,7 +51,7 @@ final class StarterController extends Controller
     {
         $starters = [];
         foreach (Starters::NAMES as $name) {
-            $starters[] = ['name' => $name, 'label' => FrontendLang::get('starter.' . $name), 'text' => FrontendLang::get('starter.' . $name . '_text'), 'sections' => array_map(static fn (array $s): string => $s[0], Starters::sections($name))];
+            $starters[] = ['name' => $name, 'label' => FrontendLang::get('starter.' . $name), 'text' => FrontendLang::get('starter.' . $name . '_text'), 'preview' => self::previewUrl($name)];
         }
         return TemplateEngine::renderFile(Frontend::path('resources/views/starter.html'), [
             'starters' => $starters,
@@ -60,6 +60,13 @@ final class StarterController extends Controller
             'view_file' => Frontend::config()->starterView(),
             'app_url' => Frontend::suggestedAppUrl() === null ? null : ['current' => Frontend::siteUri(), 'suggested' => Frontend::suggestedAppUrl()],
         ]);
+    }
+
+    /** The starter's first screen in the page's language (en for any other), shot in the default Site Style. */
+    public static function previewUrl(string $name): string
+    {
+        $lang = in_array(Languages::current(), ['ar', 'ku'], true) ? Languages::current() : 'en';
+        return Frontend::sitePath() . '/site-assets/preview/' . $name . '-' . $lang . '-v1.webp';
     }
 
     private static function flash(string $message, string $type): void
