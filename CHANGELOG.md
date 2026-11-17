@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 - 2026-11-17
+
+- **The home page of a new site** (needs skeleton 2.1's `home.fallback`). While no starter is chosen and `views/pages/index.html` is still the skeleton's welcome page, `/` shows the starter picker to administrators (and on `APP_ENV=local`) and a "coming soon" page to everyone else, in the Site Style, in en/ar/ku, marked noindex, with a "Site owner? Sign in" link. Once a starter is chosen or the page is your own, `/` is yours again. A site's own `home.fallback` is kept; `'starter' => false` turns it off. Older skeletons ignore the setting.
+- New word: `starter.owner_sign_in` (en, ar, ku).
+
 ## 0.1.0 - 2026-11-13
 
 The first release: the public side of a FloCMS website. Needs flocms-core 2.10; works with flocms-admin 0.43+ when it is installed.

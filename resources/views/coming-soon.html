@@ -1,0 +1,24 @@
+{!! site_html() !!}
+<head>
+<?php site_seo()->title(site_text('starter.coming_soon') . ' · ' . $site['name'])->noindex(); ?>
+{!! site_head() !!}
+<style>
+.fe-soon{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 16px;text-align:center}
+.fe-soon__box{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:32rem}
+.fe-soon__name{font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fe-muted)}
+.fe-soon__owner{margin-block-start:24px;font-size:.875rem;color:var(--fe-muted)}
+.fe-soon__owner a{color:inherit}
+</style>
+</head>
+<body>
+<main id="main" class="fe-soon">
+<div class="fe-soon__box">
+<p class="fe-soon__name">{{ $site['name'] }}</p>
+<h1 class="fe-h2">{{ site_text('starter.coming_soon') }}</h1>
+<p class="fe-lead">{{ site_text('starter.coming_soon_text') }}</p>
+<p class="fe-soon__owner"><a href="{{ $sign_in }}" rel="nofollow">{{ site_text('starter.owner_sign_in') }}</a></p>
+</div>
+</main>
+{!! site_foot() !!}
+</body>
+</html>

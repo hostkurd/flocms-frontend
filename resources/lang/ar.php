@@ -104,6 +104,7 @@ return [
     'starter.failed' => 'تعذّر إنشاء البداية: :reason',
     'starter.coming_soon' => 'قريباً',
     'starter.coming_soon_text' => 'هذا الموقع قيد الإنشاء. عُد إلينا قريباً.',
+    'starter.owner_sign_in' => 'هل أنت صاحب الموقع؟ سجّل الدخول لاختيار بداية الموقع.',
 
     'contact' => 'اتصل بنا',
     'admin.link' => 'العنوان',

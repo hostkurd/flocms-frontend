@@ -18,7 +18,7 @@ use FloCMS\Frontend\Seo\Sitemap;
  */
 final class Frontend
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.1.1';
 
     /** The package's addresses on the default route. A site controller of the same name wins. */
     public const CONTROLLERS = [
@@ -46,6 +46,10 @@ final class Frontend
         }
         if (class_exists(\FloCMS\Admin\Admin::class) && method_exists(\FloCMS\Admin\Admin::class, 'extend')) {
             Admin\AdminBridge::register();
+        }
+        // The starter picker / "coming soon" at / of a new site (skeleton 2.1+). A site's own hook wins.
+        if (Config::get('home.fallback') === null) {
+            Config::set('home.fallback', static fn (?\FloCMS\Core\Http\Request $request = null): ?\FloCMS\Core\Http\Response => Starters\Home::fallback($request));
         }
     }
 
