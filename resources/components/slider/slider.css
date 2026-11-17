@@ -1,0 +1,32 @@
+.fe-slider{position:relative;color:#fff;background:var(--fe-band);isolation:isolate;--fe-slider-height:min(78vh,720px)}
+.fe-slider--medium{--fe-slider-height:min(60vh,560px)}
+.fe-slider--screen{--fe-slider-height:calc(100vh - 72px)}
+.fe-slider__track{position:relative}
+.fe-slider__slide{position:relative;min-block-size:var(--fe-slider-height);display:flex;align-items:flex-end}
+.fe-slider__image{position:absolute;inset:0;inline-size:100%;block-size:100%;object-fit:cover;z-index:-2}
+.fe-slider__image--empty{background:linear-gradient(135deg,#123247,#0c2233 60%)}
+.fe-slider__scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgb(8 18 27 / .82) 0%,rgb(8 18 27 / .5) 45%,rgb(8 18 27 / .15) 100%)}
+.fe-slider__content{padding-block:96px 120px}
+.fe-slider__text{display:flex;flex-direction:column;align-items:flex-start;gap:20px;max-inline-size:640px}
+.fe-slider__text h1,.fe-slider__text h2{color:#fff}
+.fe-slider__eyebrow{font-size:.875rem;font-weight:500;color:rgb(255 255 255 / .78)}
+.fe-slider__lead{font-size:1.1875rem;color:rgb(255 255 255 / .86);max-inline-size:56ch}
+.fe-slider .fe-button{--fe-brand:var(--fe-accent);--fe-brand-hover:var(--fe-accent-hover);--fe-on-brand:var(--fe-on-accent)}
+.fe-slider :focus-visible{outline-color:#fff}
+.fe-slider__controls{display:none}
+/* Without scripts: the slides one under the other */
+.fe-no-js .fe-slider__slide+.fe-slider__slide{border-block-start:1px solid rgb(255 255 255 / .12)}
+/* With scripts: one slide at a time, the controls at the bottom */
+.fe-js .fe-slider__slide{display:none}
+.fe-js .fe-slider__slide.is-current{display:flex}
+.fe-js .fe-slider__controls{position:absolute;inset-inline:0;inset-block-end:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;pointer-events:none}
+.fe-slider__controls>*{pointer-events:auto}
+.fe-slider__progress{display:flex;align-items:center;gap:16px;font-size:.875rem;font-variant-numeric:tabular-nums;color:rgb(255 255 255 / .86)}
+.fe-slider__bar{position:relative;inline-size:120px;block-size:2px;background:rgb(255 255 255 / .28)}
+.fe-slider__bar span{position:absolute;inset-block:0;inset-inline-start:0;background:#fff;transition:inset-inline-start .3s}
+.fe-slider__buttons{display:flex;gap:8px}
+.fe-slider__button-round{display:inline-flex;align-items:center;justify-content:center;inline-size:44px;block-size:44px;border:1px solid rgb(255 255 255 / .4);border-radius:50%;background:transparent;color:#fff;text-decoration:none}
+.fe-slider__button-round:hover{background:rgb(255 255 255 / .12);color:#fff}
+.fe-slider__slide.is-entering{animation:fe-slide-in .5s ease both}
+@keyframes fe-slide-in{from{opacity:0}to{opacity:1}}
+@media (max-width:600px){.fe-slider__content{padding-block:72px 112px}.fe-slider__bar{inline-size:72px}}

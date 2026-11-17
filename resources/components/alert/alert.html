@@ -1,0 +1,9 @@
+<div class="fe-alert fe-alert--{{ $tone }}{{ $class !== '' ? ' ' . $class : '' }}" role="{{ $tone === 'danger' || $tone === 'warning' ? 'alert' : 'status' }}"@if($id !== '') id="{{ $id }}"@endif data-fe="alert">
+{!! site_icon($icon_name, ['size' => 20]) !!}
+<div class="fe-alert__body">
+@if($title !== '')<p class="fe-alert__title">{{ $title }}</p>@endif
+@if($text !== '')<p>{{ $text }}</p>@endif
+{!! $slot !!}
+</div>
+@if($dismissible)<button type="button" class="fe-icon-button fe-alert__close" data-fe-dismiss aria-label="{{ site_text('alert.close') }}">{!! site_icon('close', ['size' => 18]) !!}</button>@endif
+</div>

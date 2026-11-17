@@ -1,0 +1,9 @@
+<nav class="fe-breadcrumbs{{ $class !== '' ? ' ' . $class : '' }}" aria-label="{{ site_text('breadcrumbs.label') }}">
+<ol>
+@foreach($trail as $i => $crumb)
+<li>@if($i > 0){!! site_icon('chevron-right', ['size' => 14]) !!}@endif
+@if($crumb['url'] !== '' && $i < count($trail) - 1)<a href="{{ $crumb['url'] }}">{{ $crumb['label'] }}</a>@else<span aria-current="page">{{ $crumb['label'] }}</span>@endif
+</li>
+@endforeach
+</ol>
+</nav>

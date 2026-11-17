@@ -1,0 +1,11 @@
+@if($last > 1)
+<nav class="fe-pagination{{ $class !== '' ? ' ' . $class : '' }}" aria-label="{{ site_text('pagination.label') }}">
+<ul>
+<li>@if($current_page > 1)<a class="fe-pagination__step" href="{{ $link($current_page - 1) }}" rel="prev">{!! site_icon('chevron-left', ['size' => 16]) !!}<span>{{ site_text('pagination.previous') }}</span></a>@else<span class="fe-pagination__step" aria-disabled="true">{!! site_icon('chevron-left', ['size' => 16]) !!}<span>{{ site_text('pagination.previous') }}</span></span>@endif</li>
+@foreach($numbers as $n)
+@if($n === null)<li class="fe-pagination__gap" aria-hidden="true">…</li>@elseif($n === $current_page)<li><a href="{{ $link($n) }}" aria-current="page" aria-label="{{ site_text('pagination.current', ['number' => $n]) }}">{{ site_number($n) }}</a></li>@else<li><a href="{{ $link($n) }}" aria-label="{{ site_text('pagination.page', ['number' => $n]) }}">{{ site_number($n) }}</a></li>@endif
+@endforeach
+<li>@if($current_page < $last)<a class="fe-pagination__step" href="{{ $link($current_page + 1) }}" rel="next"><span>{{ site_text('pagination.next') }}</span>{!! site_icon('chevron-right', ['size' => 16]) !!}</a>@else<span class="fe-pagination__step" aria-disabled="true"><span>{{ site_text('pagination.next') }}</span>{!! site_icon('chevron-right', ['size' => 16]) !!}</span>@endif</li>
+</ul>
+</nav>
+@endif

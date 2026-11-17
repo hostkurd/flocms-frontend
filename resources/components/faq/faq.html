@@ -1,0 +1,19 @@
+<section class="fe-section fe-faq{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container fe-faq__inner">
+@if($heading !== '' || $intro !== '')
+<div class="fe-faq__head">
+@if($heading !== '')<h2>{{ $heading }}</h2>@endif
+@if($intro !== '')<p class="fe-muted">{{ $intro }}</p>@endif
+{!! $slot !!}
+</div>
+@endif
+<div class="fe-accordion">
+@foreach($items as $item)
+<details class="fe-accordion__item">
+<summary class="fe-accordion__question"><span>{{ $item['question'] }}</span><span class="fe-accordion__sign" aria-hidden="true">{!! site_icon('plus', ['size' => 18]) !!}</span></summary>
+<div class="fe-accordion__answer fe-prose">{!! $item['answer'] !!}</div>
+</details>
+@endforeach
+</div>
+</div>
+</section>

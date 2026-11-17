@@ -1,0 +1,4 @@
+.fe-cta__inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px 64px}
+.fe-cta__text{display:flex;flex-direction:column;gap:16px;max-inline-size:640px}
+.fe-cta h2{font-size:clamp(1.75rem,1.4rem + 1.2vw,2.25rem)}
+.fe-cta .fe-link-arrow{color:var(--fe-band-text)}

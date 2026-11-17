@@ -1,0 +1,28 @@
+<section class="fe-slider fe-slider--{{ $height }}{{ $class !== '' ? ' ' . $class : '' }}" id="{{ $slider_id }}" data-fe="slider" aria-roledescription="carousel" aria-label="{{ site_text('slider.label') }}"@if($autoplay) data-autoplay="{{ (int) $interval }}"@endif>
+<div class="fe-slider__track" aria-live="{{ $autoplay ? 'off' : 'polite' }}">
+@foreach($slides as $i => $slide)
+<div class="fe-slider__slide{{ $i === 0 ? ' is-current' : '' }}" role="group" aria-roledescription="slide" aria-label="{{ site_text('slider.slide', ['number' => site_number($i + 1), 'total' => site_number($total)]) }}" id="{{ $slider_id }}-{{ $i + 1 }}"@if($i > 0) data-later @endif>
+@if($slide['image']['src'] !== '')<img class="fe-slider__image" src="{{ $slide['image']['src'] }}" alt="{{ $slide['image']['alt'] }}"@if($i === 0) fetchpriority="high"@else loading="lazy"@endif>@else<div class="fe-slider__image fe-slider__image--empty"></div>@endif
+<div class="fe-slider__scrim"></div>
+<div class="fe-container fe-slider__content">
+<div class="fe-slider__text">
+@if($slide['eyebrow'] !== '')<p class="fe-slider__eyebrow">{{ $slide['eyebrow'] }}</p>@endif
+@if($i === 0)<h1>{{ $slide['heading'] }}</h1>@else<h2 class="fe-h1">{{ $slide['heading'] }}</h2>@endif
+@if($slide['text'] !== '')<p class="fe-slider__lead">{{ $slide['text'] }}</p>@endif
+@if($slide['link']['url'] !== '' && $slide['link']['label'] !== '')<a class="fe-button fe-button--large fe-slider__button" href="{{ $slide['link']['url'] }}"@if($slide['link']['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $slide['link']['label'] }}</a>@endif
+</div>
+</div>
+</div>
+@endforeach
+</div>
+@if($total > 1)
+<div class="fe-container fe-slider__controls">
+<div class="fe-slider__progress" aria-hidden="true"><span class="fe-slider__count" dir="ltr"><span data-fe-current>{{ site_number(1) }}</span> / {{ site_number($total) }}</span><span class="fe-slider__bar"><span style="inline-size:{{ round(100 / $total, 2) }}%"></span></span></div>
+<div class="fe-slider__buttons">
+@if($autoplay)<button type="button" class="fe-slider__button-round" data-fe-pause aria-label="{{ site_text('slider.pause') }}" data-label-play="{{ site_text('slider.play') }}" data-label-pause="{{ site_text('slider.pause') }}"><span data-icon-pause>{!! site_icon('pause', ['size' => 18]) !!}</span><span data-icon-play hidden>{!! site_icon('play', ['size' => 18]) !!}</span></button>@endif
+<a class="fe-slider__button-round" href="#{{ $slider_id }}-{{ $total }}" data-fe-prev aria-label="{{ site_text('slider.previous') }}">{!! site_icon('arrow-left', ['size' => 18]) !!}</a>
+<a class="fe-slider__button-round" href="#{{ $slider_id }}-2" data-fe-next aria-label="{{ site_text('slider.next') }}">{!! site_icon('arrow-right', ['size' => 18]) !!}</a>
+</div>
+</div>
+@endif
+</section>

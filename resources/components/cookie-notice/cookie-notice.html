@@ -1,0 +1,24 @@
+<section class="fe-cookie" id="fe-cookies" aria-labelledby="fe-cookie-title" data-fe="cookie-notice" data-cookie="{{ $cookie_name }}" data-version="{{ $cookie_version }}" data-days="{{ $days }}" data-path="{{ \FloCMS\Frontend\Http\UiController::cookiePath() }}">
+<form class="fe-container fe-cookie__inner" method="post" action="{{ site_url('/site-ui/consent') }}">
+{!! \FloCMS\Core\Csrf::field() !!}
+<input type="hidden" name="return" value="{{ $return_to }}">
+<div class="fe-cookie__text">
+<h2 class="fe-cookie__title" id="fe-cookie-title">{!! site_icon('cookie', ['size' => 18]) !!}{{ site_text('cookies.title') }}</h2>
+<p>{{ $categories === ['statistics'] ? site_text('cookies.text_statistics') : site_text('cookies.text') }}@if($policy !== null) <a href="{{ $policy }}">{{ site_text('cookies.policy') }}</a>@endif</p>
+<details class="fe-cookie__settings"@if($reopened) open @endif>
+<summary>{{ site_text('cookies.settings') }}</summary>
+<ul>
+<li><label><input type="checkbox" checked disabled><span><strong>{{ site_text('cookies.needed') }}</strong> {{ site_text('cookies.needed_text') }}</span></label></li>
+@foreach($categories as $category)
+<li><label><input type="checkbox" name="categories[]" value="{{ $category }}"@if(in_array($category, $allowed, true)) checked @endif><span><strong>{{ site_text('cookies.' . $category) }}</strong> {{ site_text('cookies.' . $category . '_text') }}</span></label></li>
+@endforeach
+</ul>
+<button type="submit" name="choice" value="custom" class="fe-button fe-button--outline fe-button--small">{{ site_text('cookies.save') }}</button>
+</details>
+</div>
+<div class="fe-cookie__actions">
+<button type="submit" name="choice" value="needed" class="fe-button fe-button--outline">{{ site_text('cookies.needed_only') }}</button>
+<button type="submit" name="choice" value="all" class="fe-button">{{ site_text('cookies.allow_all') }}</button>
+</div>
+</form>
+</section>

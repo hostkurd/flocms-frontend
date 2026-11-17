@@ -1,0 +1,20 @@
+<section class="fe-section fe-features{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container">
+@if($heading !== '' || $intro !== '')
+<div class="fe-section__head"><div>
+@if($heading !== '')<h2>{{ $heading }}</h2>@endif
+@if($intro !== '')<p class="fe-lead">{{ $intro }}</p>@endif
+</div></div>
+@endif
+<ul class="fe-features__list fe-grid" style="--fe-columns:{{ (int) $columns }}">
+@foreach($items as $item)
+<li class="fe-features__item">
+<span class="fe-features__icon">{!! site_icon($item['icon'] !== '' ? $item['icon'] : 'check', ['size' => 20]) !!}</span>
+<h3 class="fe-h4">{{ $item['heading'] }}</h3>
+@if($item['text'] !== '')<p class="fe-muted">{{ $item['text'] }}</p>@endif
+</li>
+@endforeach
+</ul>
+{!! $slot !!}
+</div>
+</section>

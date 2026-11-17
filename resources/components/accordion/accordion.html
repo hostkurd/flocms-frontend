@@ -1,0 +1,9 @@
+<div class="fe-accordion{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+@foreach($items as $i => $item)
+<details class="fe-accordion__item"@if($first_open && $i === 0) open @endif@if($group !== null) name="{{ $group }}"@endif>
+<summary class="fe-accordion__question"><span>{{ $item['title'] }}</span><span class="fe-accordion__sign" aria-hidden="true">{!! site_icon('plus', ['size' => 18]) !!}</span></summary>
+<div class="fe-accordion__answer fe-prose">{!! $item['text'] !!}</div>
+</details>
+@endforeach
+{!! $slot !!}
+</div>

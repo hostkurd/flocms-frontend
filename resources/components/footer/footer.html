@@ -1,0 +1,46 @@
+<footer class="fe-footer{{ $compact ? ' fe-footer--compact' : '' }}{{ $class !== '' ? ' ' . $class : '' }}">
+<div class="fe-container">
+@if(!$compact)
+<div class="fe-footer__grid">
+<div class="fe-footer__about">
+<a class="fe-footer__brand" href="{{ $home }}">@if($site['logo'] !== null)<img src="{{ $site['logo'] }}" alt="" height="24">@else{!! \FloCMS\Frontend\Support\Logo::svg(24) !!}@endif<span>{{ $site['name'] }}</span></a>
+@if($about_text !== '')<p>{{ $about_text }}</p>@endif
+@if($site['social'] !== [])
+<ul class="fe-footer__social" aria-label="{{ site_text('footer.follow') }}">
+@foreach($site['social'] as $network => $url)
+<li><a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{!! site_icon(\FloCMS\Frontend\Support\Icons::has($network) ? $network : 'link', ['size' => 18, 'label' => ucfirst($network)]) !!}</a></li>
+@endforeach
+</ul>
+@endif
+</div>
+@if($items !== [])
+<nav class="fe-footer__menu" aria-label="{{ site_text('menu.footer') }}">
+<ul>
+@foreach($items as $item)
+<li><a href="{{ $item['url'] }}"@if($item['current']) aria-current="page"@endif>{{ $item['label'] }}</a></li>
+@endforeach
+</ul>
+</nav>
+@endif
+@if($contact && ($site['email'] !== '' || $site['phone'] !== '' || $site['address'] !== ''))
+<div class="fe-footer__contact">
+<h2 class="fe-footer__title">{{ site_text('footer.contact') }}</h2>
+<ul>
+@if($site['address'] !== '')<li>{{ $site['address'] }}</li>@endif
+@if($site['email'] !== '')<li><a href="mailto:{{ $site['email'] }}">{{ $site['email'] }}</a></li>@endif
+@if($site['phone'] !== '')<li><a href="tel:{{ preg_replace('/[^0-9+]/', '', $site['phone']) }}" dir="ltr">{{ $site['phone'] }}</a></li>@endif
+</ul>
+</div>
+@endif
+</div>
+@endif
+<div class="fe-footer__bottom">
+<p>{{ $copyright_text }}</p>
+<div class="fe-footer__links">
+@if($policy !== null)<a href="{{ $policy }}">{{ site_text('cookies.policy') }}</a>@endif
+@if($cookie_link)<a href="?fe-cookies=1" data-fe-cookie-open>{{ site_text('cookies.link') }}</a>@endif
+{!! $slot !!}
+</div>
+</div>
+</div>
+</footer>

@@ -1,0 +1,21 @@
+<section class="fe-hero fe-hero--{{ $layout }}{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container fe-hero__inner">
+<div class="fe-hero__text">
+@if($eyebrow !== '')<p class="fe-eyebrow">{{ $eyebrow }}</p>@endif
+<h1>{{ $heading }}</h1>
+@if($text !== '')<p class="fe-lead">{{ $text }}</p>@endif
+@if($primary['url'] !== '' || $secondary['url'] !== '' || $slot !== '')
+<div class="fe-actions">
+@if($primary['url'] !== '' && $primary['label'] !== '')<a class="fe-button fe-button--large" href="{{ $primary['url'] }}"@if($primary['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $primary['label'] }}</a>@endif
+@if($secondary['url'] !== '' && $secondary['label'] !== '')<a class="fe-link-arrow" href="{{ $secondary['url'] }}"@if($secondary['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $secondary['label'] }}{!! site_icon('arrow-right', ['size' => 16]) !!}</a>@endif
+{!! $slot !!}
+</div>
+@endif
+</div>
+@if($layout === 'split')
+<div class="fe-hero__media">
+@if($image['src'] !== '')<div class="fe-media fe-ratio-4x3"><img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}"@if($image['width']) width="{{ $image['width'] }}" height="{{ $image['height'] }}"@endif fetchpriority="high"></div>@else<div class="fe-media fe-media--placeholder fe-ratio-4x3" role="img" aria-label="{{ site_text('photo') }}">{!! site_icon('image', ['size' => 32, 'stroke' => 1.2]) !!}</div>@endif
+</div>
+@endif
+</div>
+</section>

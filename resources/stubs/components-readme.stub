@@ -1,0 +1,18 @@
+# Components
+
+Each folder here is one component (flocms-frontend): its class, its template
+and, when it needs them, its CSS and JavaScript.
+
+    components/pricing/
+        Pricing.php      the class (namespace App\Components): name, props, data
+        pricing.html     the template
+        pricing.css      optional: linked only on pages that use it
+        pricing.js       optional: the same
+
+Create one with `php flo site:component Pricing --css --js`.
+
+A folder with the name of one of the package's components replaces its files:
+`components/hero/hero.html` alone changes the hero's markup and keeps its
+props; `components/hero/hero.css` alone restyles it.
+
+List them all with `php flo site:components`.

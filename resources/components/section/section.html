@@ -1,0 +1,12 @@
+<section class="{{ $section_class }}"@if($id !== '') id="{{ $id }}"@endif>
+@if($container_class !== '')<div class="{{ $container_class }}">@endif
+@if($heading !== '' || $intro !== '' || $eyebrow !== '')
+<div class="fe-section__head"><div>
+@if($eyebrow !== '')<p class="fe-eyebrow">{{ $eyebrow }}</p>@endif
+@if($heading !== '')<{{ $tag }} class="fe-h2">{{ $heading }}</{{ $tag }}>@endif
+@if($intro !== '')<p class="fe-lead">{{ $intro }}</p>@endif
+</div>{!! $slots['actions'] ?? '' !!}</div>
+@endif
+{!! $slot !!}
+@if($container_class !== '')</div>@endif
+</section>

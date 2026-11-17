@@ -1,0 +1,17 @@
+{!! site_html() !!}
+<head>
+{!! site_head() !!}
+</head>
+<body>
+{!! component('header', ['button' => ['url' => '/contact', 'label' => site_text('contact')]]) !!}
+<main id="main" class="fe-main">
+@if(\FloCMS\Core\Session::hasFlash())
+<?php $__flash = \FloCMS\Core\Session::getFlash(); ?>
+<div class="fe-container" style="padding-block:24px 0">{!! component('alert', ['tone' => in_array($__flash['type'] ?? '', ['success', 'warning', 'danger'], true) ? $__flash['type'] : 'info', 'text' => (string) ($__flash['message'] ?? '')]) !!}</div>
+@endif
+{!! $data['content'] !!}
+</main>
+{!! component('footer') !!}
+{!! site_foot() !!}
+</body>
+</html>

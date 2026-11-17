@@ -1,0 +1,12 @@
+.fe-card{position:relative;display:flex;flex-direction:column;gap:20px}
+.fe-card__body{display:flex;flex-direction:column;gap:10px}
+.fe-card__title{font-size:1.25rem}
+.fe-card__title a{color:inherit;text-decoration:none}
+.fe-card__title a::after{content:"";position:absolute;inset:0}
+.fe-card:hover .fe-card__title a{text-decoration:underline;text-decoration-thickness:1px}
+.fe-card__title a:focus-visible{outline:0}
+.fe-card:has(.fe-card__title a:focus-visible){outline:2px solid var(--fe-focus);outline-offset:6px;border-radius:var(--fe-radius)}
+.fe-card__more{min-block-size:auto;margin-block-start:4px}
+.fe-card__badge{position:absolute;inset-block-start:12px;inset-inline-start:12px}
+.fe-card .fe-media img{transition:transform .4s ease}
+.fe-card:hover .fe-media img{transform:scale(1.02)}

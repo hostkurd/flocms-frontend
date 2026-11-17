@@ -1,0 +1,7 @@
+<section class="fe-section fe-{{ name }}{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+<div class="fe-container">
+<h2>{{ $heading }}</h2>
+@if($text !== '')<p class="fe-lead">{{ $text }}</p>@endif
+{!! $slot !!}
+</div>
+</section>

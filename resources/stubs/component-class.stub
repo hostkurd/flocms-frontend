@@ -1,0 +1,34 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Components;
+
+use FloCMS\Frontend\Components\Component;
+use FloCMS\Frontend\Components\Prop;
+
+/**
+ * Use it in a template:  @component('{{ name }}', ['heading' => 'Hello']) @endcomponent
+ * or without slots:      {!! component('{{ name }}', ['heading' => 'Hello']) !!}
+ */
+final class {{ class }} extends Component
+{
+    protected static string $name = '{{ name }}';
+    protected static string $icon = 'square';
+
+    // true: offered as a block in flocms-admin's Builder (its props become the block's fields)
+    protected static bool $block = {{ block }};
+
+    public function props(): array
+    {
+        return [
+            Prop::text('heading')->required()->translatable(),
+            Prop::textarea('text')->translatable(),
+        ];
+    }
+
+    /** Extra values for the template (optional). */
+    public function data(array $props): array
+    {
+        return [];
+    }
+}

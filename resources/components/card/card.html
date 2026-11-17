@@ -1,0 +1,14 @@
+<article class="fe-card{{ $class !== '' ? ' ' . $class : '' }}"@if($id !== '') id="{{ $id }}"@endif>
+@if($image['src'] !== '')
+<div class="fe-media fe-ratio-{{ $ratio }}"><img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}" loading="lazy">@if($badge !== '')<span class="fe-badge fe-card__badge">{{ $badge }}</span>@endif</div>
+@elseif($placeholder)
+<div class="fe-media fe-media--placeholder fe-ratio-{{ $ratio }}" role="img" aria-label="{{ site_text('photo') }}">{!! site_icon('image', ['size' => 28, 'stroke' => 1.2]) !!}</div>
+@endif
+<div class="fe-card__body">
+@if($eyebrow !== '')<p class="fe-eyebrow">{{ $eyebrow }}</p>@endif
+<h3 class="fe-card__title">@if($link['url'] !== '')<a href="{{ $link['url'] }}"@if($link['new_tab']) target="_blank" rel="noopener noreferrer"@endif>{{ $heading }}</a>@else{{ $heading }}@endif</h3>
+@if($text !== '')<p class="fe-muted">{{ $text }}</p>@endif
+{!! $slot !!}
+@if($link['url'] !== '' && $link['label'] !== '')<span class="fe-link-arrow fe-card__more" aria-hidden="true">{{ $link['label'] }}{!! site_icon('arrow-right', ['size' => 16]) !!}</span>@endif
+</div>
+</article>

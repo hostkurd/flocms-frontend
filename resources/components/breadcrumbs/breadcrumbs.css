@@ -1,0 +1,5 @@
+.fe-breadcrumbs ol{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0;padding:0;list-style:none;font-size:.875rem;color:var(--fe-muted)}
+.fe-breadcrumbs li{display:inline-flex;align-items:center;gap:8px}
+.fe-breadcrumbs a{color:var(--fe-muted);text-decoration:none}
+.fe-breadcrumbs a:hover{color:var(--fe-text);text-decoration:underline}
+.fe-breadcrumbs [aria-current="page"]{color:var(--fe-text)}

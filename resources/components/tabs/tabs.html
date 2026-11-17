@@ -1,0 +1,8 @@
+<div class="fe-tabs{{ $class !== '' ? ' ' . $class : '' }}" id="{{ $tabs_id }}" data-fe="tabs"@if($label !== '') aria-label="{{ $label }}"@endif>
+@foreach($items as $i => $item)
+<details class="fe-tabs__panel" data-fe-tab="{{ $tabs_id }}-{{ $i + 1 }}"@if($i === 0) open @endif name="{{ $tabs_id }}">
+<summary class="fe-tabs__label">{{ $item['label'] }}</summary>
+<div class="fe-tabs__content fe-prose">{!! $item['content'] !!}</div>
+</details>
+@endforeach
+</div>
