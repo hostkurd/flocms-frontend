@@ -43,7 +43,8 @@ final class StartersTest extends TestCase
     public function testWithoutTheAdminTheStarterIsAView(): void
     {
         $this->write('views/pages/index.html', '<p>Welcome</p>');
-        self::assertSame(['target' => 'view', 'where' => 'views/pages/index.html'], StarterSetup::apply('slider'));
+        $result = StarterSetup::apply('slider');
+        self::assertSame(['target' => 'view', 'where' => 'views/pages/index.html'], array_intersect_key($result, ['target' => 1, 'where' => 1]));
         self::assertStringContainsString("@component('slider',", (string) file_get_contents(ROOT . '/views/pages/index.html'));
         self::assertSame('<p>Welcome</p>', file_get_contents(ROOT . '/views/pages/index.welcome.html'), 'the welcome page is kept');
         self::assertSame('slider', StarterSetup::chosen()['name']);

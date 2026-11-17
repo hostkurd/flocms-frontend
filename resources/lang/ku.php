@@ -100,6 +100,8 @@ return [
     'starter.blank_text' => 'تەنها سەرەوە و خوارەوە. لاپەڕەکە خۆت دروست بکە.',
     'starter.done' => 'لاپەڕە سەرەکییەکەت ئامادەیە. هەر کاتێک بتەوێت بیگۆڕە.',
     'starter.in_pages' => 'لە ماڵپەڕ ← لاپەڕەکان دروستکرا، لەوێ دەتوانیت دەستکاری بکەیت.',
+    'starter.template_on' => 'ڕووکاری «:template» ئێستا چالاکە (APP_TEMPLATE لە ‎.env دا)، بۆیە لاپەڕەکە بە شێوازی ماڵپەڕەکەت دەردەکەوێت',
+    'starter.template_problem' => 'ڕووکاری چالاک شێوازی ماڵپەڕەکە پیشان نادات و لێرەوە نەگۆڕدرا. php flo site:install --activate لێبدە، یان لە ‎.env دا APP_TEMPLATE=:template دابنێ',
     'starter.in_view' => 'لە :file نووسرا، لە پێکهاتەکان دروستکراوە.',
     'starter.failed' => 'دەستپێکەکە دروست نەکرا: :reason',
     'starter.coming_soon' => 'بەم زووانە',

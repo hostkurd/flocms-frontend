@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 - 2026-11-17
+
+- **Fixed: a chosen starter showed without any style** when the active template was still the skeleton's `default` (e.g. `site:install` was answered "no", or never run). That layout doesn't call `site_head()`, so the Site Style was never linked. Choosing a starter (the picker or `php flo site:starter`) now makes sure the active template's layout calls `site_head()`. If it doesn't, the package's `site` template is written (only missing files) and made active (`APP_TEMPLATE=site` in `.env`), and the picker and the command say so. A template of your own that calls `site_head()` is kept. When `.env` can't be written, you get a warning with what to do. New `Support\SiteTemplate`; new words `starter.template_on`, `starter.template_problem` (en, ar, ku).
+- **A site where a starter was already chosen** isn't changed by updating: run `php flo site:install --activate` once (or set `APP_TEMPLATE=site` in `.env`).
+
 ## 0.1.3 - 2026-11-17
 
 - **The starter picker shows real previews**: a picture of each starter's first screen in the default Site Style, in the page's language (en, ar, ku), instead of the grey outline sketches. In the previews, the image placeholders and slides show dummy pictures (houses, rooms, lamps, furniture) so a starter reads as a finished page; the starter itself still has placeholders for your own photos. 18 WebP files (720×540, about 220 KB in all) in `resources/starters/previews/`, served from `/site-assets/preview/` and cached for a year.

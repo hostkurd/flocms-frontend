@@ -101,6 +101,8 @@ return [
     'starter.blank_text' => 'Only the header and the footer. Build the page yourself.',
     'starter.done' => 'Your home page is ready. Change it any time.',
     'starter.in_pages' => 'It was created in Site → Pages, where you can edit it.',
+    'starter.template_on' => 'The ":template" template is now active (APP_TEMPLATE in .env), so the page shows in your Site Style.',
+    'starter.template_problem' => 'Your active template doesn\'t show the Site Style, and it could not be changed here. Run php flo site:install --activate, or set APP_TEMPLATE=:template in .env.',
     'starter.in_view' => 'It was written to :file, built from components.',
     'starter.failed' => 'The starter could not be created: :reason',
     'starter.coming_soon' => 'Coming soon',

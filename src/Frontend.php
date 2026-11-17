@@ -18,7 +18,7 @@ use FloCMS\Frontend\Seo\Sitemap;
  */
 final class Frontend
 {
-    public const VERSION = '0.1.3';
+    public const VERSION = '0.1.4';
 
     /** The package's addresses on the default route. A site controller of the same name wins. */
     public const CONTROLLERS = [
