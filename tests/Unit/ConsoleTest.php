@@ -35,7 +35,7 @@ final class ConsoleTest extends TestCase
         return $tester;
     }
 
-    private static function output(CommandTester $tester): string
+    private static function shown(CommandTester $tester): string
     {
         return $tester->getDisplay() . $tester->getErrorOutput();
     }
@@ -79,7 +79,7 @@ final class ConsoleTest extends TestCase
         $this->write('templates/default/style.php', "<?php return ['colours' => ['muted' => '#B0B6BC']];");
         $tester = $this->command(new StyleCommand(), ['--check' => true]);
         self::assertSame(1, $tester->getStatusCode());
-        self::assertMatchesRegularExpression('/light\s+.\s*muted\s+.\s*background/', self::output($tester));
+        self::assertMatchesRegularExpression('/light\s+.\s*muted\s+.\s*background/', self::shown($tester));
         self::assertStringContainsString('--fe-brand:#0a7fa8', $this->command(new StyleCommand(), ['--css' => true])->getDisplay());
     }
 
@@ -87,11 +87,11 @@ final class ConsoleTest extends TestCase
     {
         $doctor = $this->command(new DoctorCommand());
         self::assertSame(1, $doctor->getStatusCode(), 'the skeleton\'s layout does not call site_head() yet');
-        self::assertStringContainsString('doesn\'t call {!! site_head() !!}', self::output($doctor));
+        self::assertStringContainsString('doesn\'t call {!! site_head() !!}', self::shown($doctor));
         $this->command(new InstallCommand(), ['--activate' => true]);
         $_ENV['APP_TEMPLATE'] = 'site'; // a new process reads .env again
         $doctor = $this->command(new DoctorCommand());
-        self::assertSame(0, $doctor->getStatusCode(), self::output($doctor));
+        self::assertSame(0, $doctor->getStatusCode(), self::shown($doctor));
         $starter = $this->command(new StarterCommand(), ['journal']);
         self::assertSame(0, $starter->getStatusCode(), $starter->getDisplay());
         self::assertStringContainsString('Wrote views/pages/index.html', $starter->getDisplay());
