@@ -104,6 +104,7 @@ return [
     'starter.failed' => 'تعذّر إنشاء البداية: :reason',
     'starter.coming_soon' => 'قريباً',
     'starter.coming_soon_text' => 'هذا الموقع قيد الإنشاء. عُد إلينا قريباً.',
+    'starter.app_url' => 'قيمة APP_URL في ملف ‎.env هي :current، لكنك تتصفح الموقع على :suggested. تستخدم الروابط والصور APP_URL، لذا قد لا تعمل. اضبط APP_URL=:suggested في ملف ‎.env',
     'starter.owner_sign_in' => 'هل أنت صاحب الموقع؟ سجّل الدخول لاختيار بداية الموقع.',
 
     'contact' => 'اتصل بنا',

@@ -18,7 +18,7 @@ use FloCMS\Frontend\Seo\Sitemap;
  */
 final class Frontend
 {
-    public const VERSION = '0.1.1';
+    public const VERSION = '0.1.2';
 
     /** The package's addresses on the default route. A site controller of the same name wins. */
     public const CONTROLLERS = [
@@ -121,6 +121,36 @@ final class Frontend
     public static function siteUri(): string
     {
         return defined('SITE_URI') ? rtrim((string) constant('SITE_URI'), '/') : '';
+    }
+
+    /** The path part of the site's address ('' or e.g. '/site'), without a trailing slash. */
+    public static function sitePath(): string
+    {
+        return rtrim((string) parse_url(self::siteUri(), PHP_URL_PATH), '/');
+    }
+
+    /**
+     * When the page is being viewed on another address than APP_URL (e.g.
+     * APP_URL=http://localhost on https://mysite.localhost): the APP_URL this
+     * request suggests. null when they match or there is no request.
+     */
+    public static function suggestedAppUrl(): ?string
+    {
+        $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+        if ($host === '' || !defined('SITE_URI') || preg_match('/^[a-z0-9.\-]+(:\d+)?$|^\[[0-9a-f:.]+\](:\d+)?$/', $host) !== 1) {
+            return null;
+        }
+        $https = (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off')
+            || strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https'
+            || (string) ($_SERVER['SERVER_PORT'] ?? '') === '443';
+        $scheme = $https ? 'https' : 'http';
+        $host = preg_replace($https ? '/:443$/' : '/:80$/', '', $host);
+        $site = parse_url(self::siteUri());
+        $siteHost = strtolower((string) ($site['host'] ?? '')) . (isset($site['port']) ? ':' . $site['port'] : '');
+        if (strtolower((string) ($site['scheme'] ?? '')) === $scheme && $siteHost === $host) {
+            return null;
+        }
+        return $scheme . '://' . $host . self::sitePath();
     }
 
     public static function debug(): bool

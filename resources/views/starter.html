@@ -16,7 +16,8 @@
 .fe-starter__preview .is-pricing,.fe-starter__preview .is-faq{flex:1.4}
 .fe-starter__body{display:flex;flex-direction:column;gap:6px;flex:1}
 .fe-starter__body h2{font-size:1.125rem}
-.fe-starter__note{margin-block-start:8px;font-size:.875rem;color:var(--fe-muted)}
+.fe-starter__note{display:flex;align-items:center;gap:6px;margin-block-start:8px;font-size:.875rem;color:var(--fe-muted)}
+.fe-starter__note svg{flex:none}
 @media (max-width:900px){.fe-starters{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.fe-starters{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -29,6 +30,10 @@
 <p class="fe-lead">{{ site_text('starter.intro') }}</p>
 <p class="fe-starter__note">{!! site_icon('info', ['size' => 16]) !!} {{ site_text('starter.only_you') }}</p>
 </div></div>
+@if($app_url)
+{!! component('alert', ['tone' => 'warning', 'text' => site_text('starter.app_url', ['current' => $app_url['current'], 'suggested' => $app_url['suggested']])]) !!}
+<br>
+@endif
 @if(\FloCMS\Core\Session::hasFlash())
 <?php $flash = \FloCMS\Core\Session::getFlash(); ?>
 {!! component('alert', ['tone' => in_array($flash['type'] ?? '', ['success', 'warning', 'danger'], true) ? $flash['type'] : 'info', 'text' => (string) ($flash['message'] ?? '')]) !!}

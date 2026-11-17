@@ -62,7 +62,7 @@ final class HomeTest extends TestCase
         $html = $response->body();
         self::assertStringContainsString('Coming soon', $html);
         self::assertStringContainsString('<meta name="robots" content="noindex', $html);
-        self::assertStringContainsString('href="https://example.test/en/admin/users/login"', $html);
+        self::assertStringContainsString('href="/en/admin/users/login"', $html);
         self::assertStringNotContainsString('site-starter/choose', $html);
         self::assertSame('noindex', $response->headers()['X-Robots-Tag'] ?? null);
     }
@@ -74,7 +74,7 @@ final class HomeTest extends TestCase
 
         self::assertStringContainsString('dir="rtl"', $html);
         self::assertStringContainsString('قريباً', $html);
-        self::assertStringContainsString('https://example.test/ar/admin/users/login', $html);
+        self::assertStringContainsString('href="/ar/admin/users/login"', $html);
     }
 
     public function testAdministratorsSeeThePicker(): void

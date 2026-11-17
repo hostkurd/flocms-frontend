@@ -109,6 +109,17 @@ final class Languages
     }
 
     /**
+     * Like url(), but from the site's root ("/en/services"): for forms and
+     * redirects that must stay on the address the visitor is using.
+     */
+    public static function path(string $path, ?string $lang = null): string
+    {
+        $url = self::url($path, $lang);
+        $base = Frontend::siteUri();
+        return $base !== '' && str_starts_with($url, $base . '/') ? Frontend::sitePath() . substr($url, strlen($base)) : $url;
+    }
+
+    /**
      * The path of the page being shown, without the site's base and language
      * ("services/hosting"), or '' on the home page.
      */

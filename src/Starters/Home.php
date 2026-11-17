@@ -65,7 +65,7 @@ final class Home
     {
         return TemplateEngine::renderFile(Frontend::path('resources/views/coming-soon.html'), [
             'site' => Frontend::config()->site(),
-            'sign_in' => \FloCMS\Frontend\Support\Languages::url('/admin/users/login'),
+            'sign_in' => \FloCMS\Frontend\Support\Languages::path('/admin/users/login'),
         ]);
     }
 

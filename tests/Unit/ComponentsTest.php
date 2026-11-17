@@ -109,7 +109,7 @@ final class ComponentsTest extends TestCase
         $head = Assets::head();
         self::assertMatchesRegularExpression('#site-assets/file/bundle-[a-f0-9]{16}\.css#', $head);
         $foot = Assets::foot();
-        self::assertMatchesRegularExpression('#<script src="https://example\.test/site-assets/file/bundle-[a-f0-9]{16}\.js" defer></script>#', $foot);
+        self::assertMatchesRegularExpression('#<script src="/site-assets/file/bundle-[a-f0-9]{16}\.js" defer></script>#', $foot);
         preg_match('#bundle-[a-f0-9]{16}\.js#', $foot, $m);
         self::assertStringContainsString("/* team-members */\n;(function(){\nvar x = 1;\n})();", (string) file_get_contents(Frontend::cachePath() . '/' . $m[0]));
     }
@@ -118,7 +118,7 @@ final class ComponentsTest extends TestCase
     {
         Components::render('hero', ['heading' => 'x']);
         $head = Assets::head();
-        self::assertMatchesRegularExpression('#<link rel="stylesheet" href="https://example\.test/site-assets/file/style-[a-f0-9]{16}\.css">#', $head);
+        self::assertMatchesRegularExpression('#<link rel="stylesheet" href="/site-assets/file/style-[a-f0-9]{16}\.css">#', $head);
         self::assertSame(1, substr_count($head, '<link'), 'the package\'s own CSS is in the style file');
         self::assertSame('', Assets::foot(), 'no script for a page that needs none');
         Components::render('slider', ['slides' => [['heading' => 'a']]]);

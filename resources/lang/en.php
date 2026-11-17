@@ -105,6 +105,7 @@ return [
     'starter.failed' => 'The starter could not be created: :reason',
     'starter.coming_soon' => 'Coming soon',
     'starter.coming_soon_text' => 'This site is being built. Please come back soon.',
+    'starter.app_url' => 'APP_URL in .env is :current, but you are viewing the site at :suggested. Links and images use APP_URL, so they may not work. Set APP_URL=:suggested in .env.',
     'starter.owner_sign_in' => 'Site owner? Sign in to choose how the site starts.',
 
     'contact' => 'Contact us',
