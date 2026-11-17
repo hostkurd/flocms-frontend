@@ -54,6 +54,20 @@ final class AssetController extends Controller
         return self::send((string) file_get_contents($path), 'font/woff2')->header('Access-Control-Allow-Origin', '*');
     }
 
+    /** /site-assets/preview/<starter>-<lang>-v1.webp: the starter picker's preview images. */
+    public function preview(): Response
+    {
+        $name = $this->name();
+        if (preg_match('/^(' . implode('|', \FloCMS\Frontend\Starters\Starters::NAMES) . ')-(en|ar|ku)-v1\.webp$/D', $name) !== 1) {
+            throw new HttpException(404);
+        }
+        $path = dirname(__DIR__, 2) . '/resources/starters/previews/' . $name;
+        if (!is_file($path)) {
+            throw new HttpException(404);
+        }
+        return self::send((string) file_get_contents($path), 'image/webp');
+    }
+
     private function name(): string
     {
         if (!$this->request->isMethod('GET', 'HEAD')) {

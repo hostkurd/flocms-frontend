@@ -18,16 +18,6 @@ use FloCMS\Frontend\Tests\TestCase;
 final class HttpTest extends TestCase
 {
     /** @param list<string> $params */
-    private function controller(string $class, string $method = 'GET', array $params = [], array $post = []): object
-    {
-        $controller = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
-        $property = new \ReflectionProperty(\FloCMS\Core\Controller::class, 'params');
-        $property->setAccessible(true);
-        $property->setValue($controller, $params);
-        $controller->setRequest(new Request([], $post, ['REQUEST_METHOD' => $method, 'REQUEST_URI' => '/'], [], []));
-        return $controller;
-    }
-
     public function testThePackagesAddressesOnTheDefaultRouteOnly(): void
     {
         self::assertSame(AssetController::class, Frontend::resolve('site-assets', 'default'));

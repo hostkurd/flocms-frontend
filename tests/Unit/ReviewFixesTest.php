@@ -17,16 +17,6 @@ use FloCMS\Frontend\Tests\TestCase;
 /** The independent review's findings (0.1.0), each kept fixed. */
 final class ReviewFixesTest extends TestCase
 {
-    private function controller(string $class, string $method = 'GET', array $params = [], array $post = [], array $get = []): object
-    {
-        $controller = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
-        $property = new \ReflectionProperty(\FloCMS\Core\Controller::class, 'params');
-        $property->setAccessible(true);
-        $property->setValue($controller, $params);
-        $controller->setRequest(new Request($get, $post, ['REQUEST_METHOD' => $method, 'REQUEST_URI' => '/'], [], []));
-        return $controller;
-    }
-
     public function testAPageFromTheBuildersCacheKeepsItsComponentScripts(): void
     {
         \FloCMS\Admin\Admin::useConfig([], true, ROOT);

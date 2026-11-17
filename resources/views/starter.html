@@ -6,14 +6,8 @@
 .fe-starters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0;padding:0;list-style:none}
 .fe-starter{display:flex;flex-direction:column;gap:16px;padding:16px;border:1px solid var(--fe-line);border-radius:var(--fe-radius);background:var(--fe-background)}
 .fe-starter:focus-within{border-color:var(--fe-brand)}
-.fe-starter__preview{display:flex;flex-direction:column;gap:5px;aspect-ratio:4/3;padding:10px;border:1px solid var(--fe-line);border-radius:var(--fe-radius);background:var(--fe-background);overflow:hidden}
-.fe-starter__preview span{display:block;border-radius:2px;background:var(--fe-surface);border:1px solid var(--fe-line);flex:1}
-.fe-starter__preview .is-nav{flex:0 0 10px;background:transparent;border:0;border-block-end:1px solid var(--fe-line);border-radius:0}
-.fe-starter__preview .is-hero{flex:2.2}
-.fe-starter__preview .is-slider{flex:2.6;background:var(--fe-band);border-color:var(--fe-band)}
-.fe-starter__preview .is-call-to-action,.fe-starter__preview .is-foot{background:var(--fe-band);border-color:var(--fe-band)}
-.fe-starter__preview .is-foot{flex:0 0 12px}
-.fe-starter__preview .is-pricing,.fe-starter__preview .is-faq{flex:1.4}
+.fe-starter__preview{position:relative;display:block;aspect-ratio:4/3;border:1px solid var(--fe-line);border-radius:var(--fe-radius);background:var(--fe-surface);overflow:hidden}
+.fe-starter__preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
 .fe-starter__body{display:flex;flex-direction:column;gap:6px;flex:1}
 .fe-starter__body h2{font-size:1.125rem}
 .fe-starter__note{display:flex;align-items:center;gap:6px;margin-block-start:8px;font-size:.875rem;color:var(--fe-muted)}
@@ -42,7 +36,7 @@
 <ul class="fe-starters">
 @foreach($starters as $starter)
 <li class="fe-starter">
-<div class="fe-starter__preview" aria-hidden="true"><span class="is-nav"></span>@foreach($starter['sections'] as $section)<span class="is-{{ $section }}"></span>@endforeach<span class="is-foot"></span></div>
+<div class="fe-starter__preview"><img src="{{ $starter['preview'] }}" width="720" height="540" alt="" loading="lazy" decoding="async"></div>
 <div class="fe-starter__body">
 <h2>{{ $starter['label'] }}</h2>
 <p class="fe-muted">{{ $starter['text'] }}</p>

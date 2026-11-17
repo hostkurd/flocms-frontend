@@ -57,6 +57,17 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         @unlink(ROOT . '/templates/default/style.php');
     }
 
+    /** A controller of the package for $params (the URL's parts), as the router makes it. */
+    protected function controller(string $class, string $method = 'GET', array $params = [], array $post = [], array $get = []): object
+    {
+        $controller = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
+        $property = new \ReflectionProperty(\FloCMS\Core\Controller::class, 'params');
+        $property->setAccessible(true);
+        $property->setValue($controller, $params);
+        $controller->setRequest(new \FloCMS\Core\Http\Request($get, $post, ['REQUEST_METHOD' => $method, 'REQUEST_URI' => '/'], [], []));
+        return $controller;
+    }
+
     protected function write(string $relative, string $contents): void
     {
         $path = ROOT . '/' . $relative;
