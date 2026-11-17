@@ -21,7 +21,8 @@ use FloCMS\Frontend\Frontend;
 final class StarterSetup
 {
     /**
-     * @return array{target: string, where: string} target "pages" or "view"; where: the page id or the file
+     * @return array{target: string, where: string, template: array{changed: bool, template: string, problem: ?string}}
+     *         target "pages" or "view"; where: the page id or the file; template: SiteTemplate::ensure()
      * @throws \RuntimeException when nothing could be created
      */
     public static function apply(string $name, bool $force = false): array
@@ -34,6 +35,8 @@ final class StarterSetup
         }
         $result = self::pagesAvailable() ? self::intoPages($name, $force) : self::intoView($name, $force);
         self::remember($name, $result);
+        // The starter is made of components: the active layout must link the Site Style.
+        $result['template'] = \FloCMS\Frontend\Support\SiteTemplate::ensure();
         return $result;
     }
 

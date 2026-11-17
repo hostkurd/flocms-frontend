@@ -100,6 +100,8 @@ return [
     'starter.blank_text' => 'الترويسة والتذييل فقط. ابنِ الصفحة بنفسك.',
     'starter.done' => 'صفحتك الرئيسية جاهزة. غيّرها متى شئت.',
     'starter.in_pages' => 'أُنشئت في الموقع ← الصفحات، حيث يمكنك تعديلها.',
+    'starter.template_on' => 'أصبح القالب «:template» هو القالب الفعّال (APP_TEMPLATE في ملف ‎.env)، لذا تظهر الصفحة بنمط موقعك',
+    'starter.template_problem' => 'القالب الفعّال لا يعرض نمط الموقع، وتعذّر تغييره من هنا. شغّل php flo site:install --activate أو اضبط APP_TEMPLATE=:template في ملف ‎.env',
     'starter.in_view' => 'كُتبت في :file، مبنية من المكوّنات.',
     'starter.failed' => 'تعذّر إنشاء البداية: :reason',
     'starter.coming_soon' => 'قريباً',

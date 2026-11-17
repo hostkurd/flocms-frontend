@@ -38,7 +38,14 @@ final class StarterController extends Controller
         try {
             $result = StarterSetup::apply($name);
             $message = FrontendLang::get('starter.done') . ' ' . ($result['target'] === 'pages' ? FrontendLang::get('starter.in_pages') : FrontendLang::get('starter.in_view', ['file' => $result['where']]));
-            self::flash($message, 'success');
+            if ($result['template']['changed']) {
+                $message .= ' ' . FrontendLang::get('starter.template_on', ['template' => $result['template']['template']]);
+            }
+            if ($result['template']['problem'] !== null) {
+                self::flash($message . ' ' . FrontendLang::get('starter.template_problem', ['template' => \FloCMS\Frontend\Support\SiteTemplate::NAME]), 'warning');
+            } else {
+                self::flash($message, 'success');
+            }
         } catch (\RuntimeException $error) {
             self::flash(FrontendLang::get('starter.failed', ['reason' => $error->getMessage()]), 'danger');
             return Response::make('', 303)->header('Location', Languages::path('/site-starter'));

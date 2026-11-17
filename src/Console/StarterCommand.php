@@ -60,6 +60,12 @@ final class StarterCommand extends Command
         $this->success($result['target'] === 'pages'
             ? 'Created the home page in Site → Pages (page ' . $result['where'] . '), built from blocks.'
             : 'Wrote ' . $result['where'] . ', built from components.');
+        if ($result['template']['changed']) {
+            $this->success('APP_TEMPLATE=' . $result['template']['template'] . ' in .env: the site template shows the starter in the Site Style.');
+        }
+        if ($result['template']['problem'] !== null) {
+            $this->warn('The active template doesn\'t link the Site Style and ' . $result['template']['problem'] . ': run php flo site:install --activate, or set APP_TEMPLATE=site in .env.');
+        }
         return self::SUCCESS;
     }
 }

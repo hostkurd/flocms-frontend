@@ -83,17 +83,10 @@ final class InstallCommand extends Command
     /** APP_TEMPLATE=<name> in .env (the line changed or added). */
     private function activate(string $template): void
     {
-        $file = $this->project()->path('.env');
-        if (!is_file($file) || !is_writable($file)) {
+        if (\FloCMS\Frontend\Support\SiteTemplate::activate($template) !== null) {
             $this->warn('.env can\'t be changed: set APP_TEMPLATE=' . $template . ' yourself.');
             return;
         }
-        $env = (string) file_get_contents($file);
-        $line = 'APP_TEMPLATE=' . $template;
-        $env = preg_match('/^APP_TEMPLATE=.*$/m', $env) === 1
-            ? (string) preg_replace('/^APP_TEMPLATE=.*$/m', $line, $env, 1)
-            : rtrim($env) . PHP_EOL . $line . PHP_EOL;
-        file_put_contents($file, $env, LOCK_EX);
         $this->project()->refresh();
         $this->success('APP_TEMPLATE=' . $template . ' in .env');
     }
