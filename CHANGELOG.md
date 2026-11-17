@@ -2,7 +2,7 @@
 
 ## 0.1.3 - 2026-11-17
 
-- **The starter picker shows real previews**: a picture of each starter's first screen in the default Site Style, in the page's language (en, ar, ku), instead of the grey outline sketches. 18 WebP files (720×540, about 190 KB in all) in `resources/starters/previews/`, served from `/site-assets/preview/` and cached for a year.
+- **The starter picker shows real previews**: a picture of each starter's first screen in the default Site Style, in the page's language (en, ar, ku), instead of the grey outline sketches. In the previews, the image placeholders and slides show dummy pictures (houses, rooms, lamps, furniture) so a starter reads as a finished page; the starter itself still has placeholders for your own photos. 18 WebP files (720×540, about 220 KB in all) in `resources/starters/previews/`, served from `/site-assets/preview/` and cached for a year.
 
 ## 0.1.2 - 2026-11-17
 
