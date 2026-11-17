@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 - 2026-11-17
+
+- **Fixed: no stylesheet when the site is viewed on another address than `APP_URL`** (e.g. `APP_URL=http://localhost` on `https://mysite.localhost`). The Site Style and the component files were linked with `APP_URL`'s full address, so the browser asked the wrong host (and an https page refused an http file). They are now linked from the site's root (`/site-assets/file/…`), like the fonts already were. Links in menus, canonical and hreflang still use `APP_URL`.
+- **Fixed: the starter picker works on such an address too.** Its form, the redirect after choosing and the coming-soon page's sign-in link stay on the address you are using (`Languages::path()`, new).
+- **The picker warns when `APP_URL` doesn't match** the address you are viewing, with the value to set, the way the skeleton's welcome page did. New word: `starter.app_url` (en, ar, ku).
+- The picker's "only administrators" note keeps its icon on the same line.
+
 ## 0.1.1 - 2026-11-17
 
 - **The home page of a new site** (needs skeleton 2.1's `home.fallback`). While no starter is chosen and `views/pages/index.html` is still the skeleton's welcome page, `/` shows the starter picker to administrators (and on `APP_ENV=local`) and a "coming soon" page to everyone else, in the Site Style, in en/ar/ku, marked noindex, with a "Site owner? Sign in" link. Once a starter is chosen or the page is your own, `/` is yours again. A site's own `home.fallback` is kept; `'starter' => false` turns it off. Older skeletons ignore the setting.

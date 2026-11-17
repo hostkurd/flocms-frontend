@@ -41,9 +41,9 @@ final class StarterController extends Controller
             self::flash($message, 'success');
         } catch (\RuntimeException $error) {
             self::flash(FrontendLang::get('starter.failed', ['reason' => $error->getMessage()]), 'danger');
-            return Response::make('', 303)->header('Location', Languages::url('/site-starter'));
+            return Response::make('', 303)->header('Location', Languages::path('/site-starter'));
         }
-        return Response::make('', 303)->header('Location', Languages::url('/'));
+        return Response::make('', 303)->header('Location', Languages::path('/'));
     }
 
     /** The picker's HTML: a page of its own, in the Site Style. */
@@ -55,9 +55,10 @@ final class StarterController extends Controller
         }
         return TemplateEngine::renderFile(Frontend::path('resources/views/starter.html'), [
             'starters' => $starters,
-            'action' => Languages::url('/site-starter/choose'),
+            'action' => Languages::path('/site-starter/choose'),
             'target' => StarterSetup::pagesAvailable() ? 'pages' : 'view',
             'view_file' => Frontend::config()->starterView(),
+            'app_url' => Frontend::suggestedAppUrl() === null ? null : ['current' => Frontend::siteUri(), 'suggested' => Frontend::suggestedAppUrl()],
         ]);
     }
 

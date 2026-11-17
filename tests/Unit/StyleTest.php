@@ -96,7 +96,7 @@ final class StyleTest extends TestCase
     {
         $first = Style::fileName();
         self::assertMatchesRegularExpression('/^style-[a-f0-9]{16}\.css$/', $first);
-        self::assertSame('https://example.test/site-assets/file/' . $first, Style::url());
+        self::assertSame('/site-assets/file/' . $first, Style::url());
         self::assertFileExists(ROOT . '/storage/cache/frontend/' . $first);
         Style::useValues(['colours' => ['brand' => '#7a3e9d']]);
         self::assertNotSame($first, Style::fileName());

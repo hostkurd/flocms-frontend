@@ -103,7 +103,7 @@ final class HttpTest extends TestCase
             self::assertSame(6, substr_count($html, 'name="starter"'));
             self::assertStringContainsString('<meta name="robots" content="noindex, follow">', $html);
             $response = $this->controller(StarterController::class, 'POST', [], ['starter' => 'landing'])->choose();
-            self::assertSame('https://example.test/en/', $response->headers()['Location'] ?? null);
+            self::assertSame('/en/', $response->headers()['Location'] ?? null);
             self::assertFileExists(ROOT . '/views/pages/index.html');
             try {
                 $this->controller(StarterController::class)->index();

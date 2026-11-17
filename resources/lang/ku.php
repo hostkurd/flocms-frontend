@@ -104,6 +104,7 @@ return [
     'starter.failed' => 'دەستپێکەکە دروست نەکرا: :reason',
     'starter.coming_soon' => 'بەم زووانە',
     'starter.coming_soon_text' => 'ئەم ماڵپەڕە لە ژێر دروستکردندایە. تکایە بەم زووانە بگەڕێوە.',
+    'starter.app_url' => 'APP_URL لە فایلی ‎.env دا :current ە، بەڵام تۆ ماڵپەڕەکە لە :suggested دەبینیت. بەستەر و وێنەکان APP_URL بەکاردەهێنن، بۆیە لەوانەیە کار نەکەن. لە ‎.env دا APP_URL=:suggested دابنێ',
     'starter.owner_sign_in' => 'خاوەنی ماڵپەڕیت؟ بچۆ ژوورەوە بۆ هەڵبژاردنی سەرەتای ماڵپەڕەکە.',
 
     'contact' => 'پەیوەندیمان پێوە بکە',

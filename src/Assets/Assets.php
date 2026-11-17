@@ -165,10 +165,14 @@ final class Assets
         return $files !== [] && self::bundleName($files, $extension) === $bundle ? $files : null;
     }
 
-    /** The address of a generated file. */
+    /**
+     * The address of a generated file, from the site's root (like the fonts):
+     * it loads on every address the site answers on, even when APP_URL is
+     * another one (http vs https, localhost vs a local domain).
+     */
     public static function url(string $file): string
     {
-        return Frontend::siteUri() . '/site-assets/file/' . $file;
+        return Frontend::sitePath() . '/site-assets/file/' . $file;
     }
 
     /**
@@ -177,7 +181,7 @@ final class Assets
      */
     public static function fontUrl(string $file): string
     {
-        return rtrim((string) parse_url(Frontend::siteUri(), PHP_URL_PATH), '/') . '/site-assets/font/' . $file;
+        return Frontend::sitePath() . '/site-assets/font/' . $file;
     }
 
     public static function reset(): void
