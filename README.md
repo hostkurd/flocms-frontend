@@ -187,6 +187,7 @@ Six ready-made home pages, all made of components: **Studio**, **Slider**, **Sho
 - With flocms-admin's Pages on, the starter becomes the home page in Site → Pages, built from Builder blocks.
 - Without them, it's written to `views/pages/index.html` as `@component` calls you own and edit. The skeleton's welcome page that was there is kept as `views/pages/index.welcome.html`.
 - It's created once; `--force` creates another.
+- **On skeleton 2.1+, `/` of a new site** (no starter chosen, `views/pages/index.html` still the skeleton's welcome page) shows the picker to administrators and on `APP_ENV=local`, and a short "coming soon" page (noindex, with a sign-in link) to everyone else. This uses the skeleton's `home.fallback` setting; a site that sets its own keeps it. `'starter' => false` in `config/frontend.php` turns both off.
 
 ## With flocms-admin
 
