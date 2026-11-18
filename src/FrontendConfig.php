@@ -119,6 +119,32 @@ final class FrontendConfig
         return array_values(array_filter((array) ($this->values['components'] ?? []), 'is_string'));
     }
 
+    /** The site's collections (0.2): classes, usually App\Collections\<Name>. @return list<string> */
+    public function collections(): array
+    {
+        return array_values(array_filter((array) ($this->values['collections'] ?? []), 'is_string'));
+    }
+
+    /**
+     * The shop's settings (D38, Q3, Q4): its currency, and where "Ask about
+     * this product" goes: a WhatsApp number (preferred) or a page.
+     *
+     * @return array{currency: string, decimals: int, whatsapp: string, ask_url: string}
+     */
+    public function shop(): array
+    {
+        $shop = is_array($this->values['shop'] ?? null) ? $this->values['shop'] : [];
+        $currency = is_string($shop['currency'] ?? null) && preg_match('/^[A-Z]{3}$/', $shop['currency']) === 1 ? $shop['currency'] : 'USD';
+        if (isset($shop['currency']) && $currency !== $shop['currency']) {
+            $this->problems[] = 'shop.currency must be a three-letter code such as USD or IQD';
+        }
+        $decimals = is_int($shop['decimals'] ?? null) ? max(0, min(3, $shop['decimals'])) : 2;
+        $ask = is_array($shop['ask'] ?? null) ? $shop['ask'] : [];
+        $whatsapp = is_scalar($ask['whatsapp'] ?? null) ? (string) preg_replace('/\D+/', '', (string) $ask['whatsapp']) : '';
+        $url = is_string($ask['url'] ?? null) ? trim($ask['url']) : '/contact';
+        return ['currency' => $currency, 'decimals' => $decimals, 'whatsapp' => $whatsapp, 'ask_url' => $url];
+    }
+
     /** Whether the starter picker may be shown (D26). */
     public function starter(): bool
     {
@@ -140,6 +166,7 @@ final class FrontendConfig
     {
         $this->menus();
         $this->cookies();
+        $this->shop();
         return array_values(array_unique($this->problems));
     }
 }

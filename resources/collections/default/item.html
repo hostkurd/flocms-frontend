@@ -1,0 +1,33 @@
+<?php $__img = $item->image(); $__tags = $item->get('tags'); $__author = method_exists($collection, 'showsAuthor') && $collection::showsAuthor() && is_string($item->raw('author') ?? null) ? (string) $item->raw('author') : ''; ?>
+<article class="fe-post">
+<div class="fe-container">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+<header class="fe-post__head">
+<h1>{{ $title }}</h1>
+@if($item->get('excerpt') !== '')<p class="fe-lead">{{ $item->get('excerpt') }}</p>@endif
+@if($__author !== '')<p class="fe-muted">{{ site_text('collections.by', ['name' => $__author]) }}</p>@endif
+</header>
+@if($__img !== null)<figure class="fe-post__cover fe-media fe-ratio-16x9"><img src="{{ $__img['src'] }}" alt="{{ $__img['alt'] }}"></figure>@endif
+<div class="fe-post__body">
+<div class="fe-prose">{!! $item->get('body') !!}</div>
+@if(is_array($__tags) && $__tags !== [])
+<div class="fe-post__tags"><span>{{ site_text('collections.tags') }}</span><ul>@foreach($__tags as $t)<li><a href="{{ $tag_url !== null ? $tag_url($t) : '#' }}">{{ $t }}</a></li>@endforeach</ul></div>
+@endif
+{!! site_part('share', ['url' => $item->url(), 'title' => $title]) !!}
+@if($newer !== null || $older !== null)
+<nav class="fe-post__nav" aria-label="{{ site_text('collections.more_posts') }}">
+@if($newer !== null)<a href="{{ $newer->url() }}" rel="prev"><span>{!! site_icon('arrow-left', ['size' => 15]) !!}{{ site_text('collections.newer') }}</span>{{ $newer->title() }}</a>@else<span></span>@endif
+@if($older !== null)<a class="fe-post__nav-older" href="{{ $older->url() }}" rel="next"><span>{{ site_text('collections.older') }}{!! site_icon('arrow-right', ['size' => 15]) !!}</span>{{ $older->title() }}</a>@endif
+</nav>
+@endif
+</div>
+</div>
+</article>
+@if($related !== [])
+<section class="fe-section fe-section--surface">
+<div class="fe-container">
+<h2 class="fe-collection-related__title">{{ $group !== null ? site_text('collections.more_in', ['name' => $group->title()]) : site_text('collections.more_posts') }}</h2>
+<div class="fe-collection-grid fe-collection-grid--posts">@foreach($related as $r){!! site_part('item-card', ['item' => $r, 'collection' => $collection]) !!}@endforeach</div>
+</div>
+</section>
+@endif

@@ -17,7 +17,9 @@ use FloCMS\Frontend\Support\Languages;
  */
 final class Prop
 {
-    public const TYPES = ['text', 'textarea', 'rich_text', 'number', 'toggle', 'select', 'image', 'link', 'date', 'colour', 'icon', 'list'];
+    public const TYPES = ['text', 'textarea', 'rich_text', 'number', 'toggle', 'select', 'image', 'link', 'date', 'colour', 'icon', 'list',
+        // 0.2: the fields of collections
+        'slug', 'tags', 'price', 'images', 'pairs'];
 
     private bool $required = false;
     private mixed $default = null;
@@ -31,6 +33,10 @@ final class Prop
     private ?float $max = null;
     /** @var list<Prop> */
     private array $children = [];
+    /** slug: the field it is made from; select: the collection class its options come from */
+    private ?string $from = null;
+    private bool $filterable = false;
+    private bool $searchable = false;
 
     private function __construct(private string $type, private string $name)
     {
@@ -56,6 +62,17 @@ final class Prop
     /** One of the package's icons (site_icon()). */
     public static function icon(string $name): self { return new self('icon', $name); }
     /** @param list<Prop> $props the props of each item */
+    /** An address part, made from another field ("title") when empty. Translatable: one per language. */
+    public static function slug(string $name): self { return new self('slug', $name); }
+    /** Short words (a post's tags): a list of strings. */
+    public static function tags(string $name): self { return new self('tags', $name); }
+    /** An amount with two decimals, or none ("Price on request"). */
+    public static function price(string $name): self { return (new self('price', $name))->min(0); }
+    /** Several images, in order (a product's photos). The first is the cover. */
+    public static function images(string $name): self { return new self('images', $name); }
+    /** Label and value rows (a product's specifications). */
+    public static function pairs(string $name): self { return new self('pairs', $name); }
+
     public static function list(string $name, array $props): self
     {
         $prop = (new self('list', $name))->default([]);
@@ -81,6 +98,16 @@ final class Prop
     /** Number: the lowest value; list: the fewest items. */
     public function min(int|float $min): self { $this->min = (float) $min; return $this; }
 
+    /** slug: the field it is made from; select: a collection class whose items are the options. */
+    public function from(string $from): self { $this->from = $from; return $this; }
+    /** A collection's list page offers it as a filter. */
+    public function filterable(bool $filterable = true): self { $this->filterable = $filterable; return $this; }
+    /** A collection's search looks in it. */
+    public function searchable(bool $searchable = true): self { $this->searchable = $searchable; return $this; }
+    public function getFrom(): ?string { return $this->from; }
+    public function isFilterable(): bool { return $this->filterable; }
+    public function isSearchable(): bool { return $this->searchable; }
+
     public function type(): string { return $this->type; }
     public function name(): string { return $this->name; }
     public function isRequired(): bool { return $this->required; }
@@ -102,7 +129,8 @@ final class Prop
         return match ($this->type) {
             'toggle' => false,
             'number' => !is_numeric($value),
-            'list' => !is_array($value) || $value === [],
+            'list', 'tags', 'images', 'pairs' => !is_array($value) || $value === [],
+            'price' => !is_numeric($value),
             'image' => !is_array($value) || ($value['src'] ?? '') === '',
             'link' => !is_array($value) || ($value['url'] ?? '') === '',
             default => $value === null || (is_string($value) && trim($value) === '') || $value === [],
@@ -116,6 +144,9 @@ final class Prop
     public function clean(mixed $value, ?string $lang = null): mixed
     {
         $lang ??= Languages::current();
+        if (is_string($value) && in_array($this->type, ['tags', 'images', 'pairs'], true) && str_starts_with(ltrim($value), '{')) {
+            $value = json_decode($value, true); // a JSON column: one value per language
+        }
         if ($this->translatable || (is_array($value) && $this->type !== 'list' && $this->type !== 'link' && $this->type !== 'image' && self::isLanguageMap($value))) {
             $value = self::pick($value, $lang);
         }
@@ -141,6 +172,9 @@ final class Prop
                 return $value === true || $value === 1 || $value === '1' || $value === 'on' || $value === 'true';
             case 'select':
                 $key = is_scalar($value) ? (string) $value : '';
+                if ($this->from !== null && $this->options === []) {
+                    return $key; // an item of another collection (a category's id)
+                }
                 foreach (array_keys($this->options) as $option) {
                     if ((string) $option === $key) { return $key; }
                 }
@@ -156,6 +190,39 @@ final class Prop
                 return is_string($value) && preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/', trim($value)) === 1 ? strtolower(trim($value)) : '';
             case 'icon':
                 return is_string($value) && Icons::has($value) ? $value : '';
+            case 'slug':
+                return self::slugify(is_scalar($value) ? (string) $value : '');
+            case 'tags':
+                if (is_string($value)) {
+                    $value = str_starts_with(ltrim($value), '[') ? json_decode($value, true) : explode(',', $value);
+                }
+                $tags = [];
+                foreach (is_array($value) ? $value : [] as $tag) {
+                    $tag = is_scalar($tag) ? trim((string) preg_replace('/\s+/u', ' ', (string) $tag)) : '';
+                    if ($tag !== '' && !in_array($tag, $tags, true)) { $tags[] = mb_substr($tag, 0, 60); }
+                }
+                return $tags;
+            case 'price':
+                if (!is_numeric($value) || (float) $value < 0) { return null; }
+                return number_format((float) $value, 2, '.', '');
+            case 'images':
+                if (is_string($value) && str_starts_with(ltrim($value), '[')) { $value = json_decode($value, true); }
+                $images = [];
+                foreach (is_array($value) ? array_values($value) : [] as $one) {
+                    $image = self::cleanImage($one);
+                    if ($image['src'] !== '') { $images[] = $image; }
+                }
+                return $images;
+            case 'pairs':
+                if (is_string($value) && str_starts_with(ltrim($value), '[')) { $value = json_decode($value, true); }
+                $pairs = [];
+                foreach (is_array($value) ? array_values($value) : [] as $row) {
+                    if (!is_array($row)) { continue; }
+                    $label = is_scalar($row['label'] ?? $row[0] ?? null) ? trim((string) ($row['label'] ?? $row[0])) : '';
+                    $text = is_scalar($row['value'] ?? $row[1] ?? null) ? trim((string) ($row['value'] ?? $row[1])) : '';
+                    if ($label !== '' || $text !== '') { $pairs[] = ['label' => $label, 'value' => $text]; }
+                }
+                return $pairs;
             case 'list':
                 if (is_string($value) && str_starts_with(ltrim($value), '[')) { $value = json_decode($value, true); }
                 $items = [];
@@ -194,8 +261,20 @@ final class Prop
         return null;
     }
 
+    /**
+     * An address part: lower case, words joined with "-". Letters of any
+     * script stay (Arabic and Kurdish slugs, Q7); anything else becomes "-".
+     */
+    public static function slugify(string $text): string
+    {
+        $text = mb_strtolower(trim($text));
+        $text = (string) preg_replace('/[^\p{L}\p{M}\p{N}]+/u', '-', $text);
+        $text = trim($text, '-');
+        return mb_substr($text, 0, 120);
+    }
+
     /** @param array<mixed> $value */
-    private static function isLanguageMap(array $value): bool
+    public static function isLanguageMap(array $value): bool
     {
         if ($value === []) { return false; }
         foreach (array_keys($value) as $key) {
@@ -205,7 +284,7 @@ final class Prop
     }
 
     /** A translatable value: the page's language, the default language, then the first one given. */
-    private static function pick(mixed $value, string $lang): mixed
+    public static function pick(mixed $value, string $lang): mixed
     {
         if (!is_array($value) || !self::isLanguageMap($value)) { return $value; }
         foreach ([$lang, Languages::default()] as $try) {

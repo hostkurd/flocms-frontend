@@ -154,3 +154,27 @@ if (!function_exists('site_is_rtl')) {
         return Languages::isRtl();
     }
 }
+
+if (!function_exists('site_part')) {
+    /**
+     * A part of a collection's pages (a card, the filters): the site's
+     * templates/<template>/collections/parts/<name>.html, else the package's.
+     *
+     * @param array<string, mixed> $vars
+     */
+    function site_part(string $name, array $vars = []): string
+    {
+        return \FloCMS\Frontend\Collections\CollectionPages::part($name, $vars);
+    }
+}
+
+if (!function_exists('site_collection')) {
+    /**
+     * A collection by name, for templates: site_collection('posts')->source()->all().
+     */
+    function site_collection(string $name): ?\FloCMS\Frontend\Collections\Collection
+    {
+        $class = \FloCMS\Frontend\Collections\Collections::byName($name);
+        return $class === null ? null : $class::get();
+    }
+}

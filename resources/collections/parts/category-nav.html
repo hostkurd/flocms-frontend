@@ -1,0 +1,11 @@
+@if($groups !== [] || !empty($rss))
+<nav class="fe-category-nav" aria-label="{{ site_text('collections.categories') }}">
+<ul>
+<li><a href="{{ $collection::url() }}"{!! empty($current) ? ' aria-current="page"' : '' !!}>{{ site_text('collections.all') }}<span>{{ site_number($total) }}</span></a></li>
+@foreach($groups as $g)
+<li><a href="{{ $g['url'] }}"{!! $g['current'] ? ' aria-current="page"' : '' !!}>{{ $g['label'] }}<span>{{ site_number($g['count']) }}</span></a></li>
+@endforeach
+</ul>
+@if(!empty($rss))<a class="fe-category-nav__rss" href="{{ $collection::url() }}/feed.xml">{!! site_icon('rss', ['size' => 15]) !!}{{ site_text('collections.rss') }}</a>@endif
+</nav>
+@endif

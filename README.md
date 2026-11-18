@@ -1,6 +1,6 @@
 # flocms-frontend
 
-The public side of a FloCMS website: **components** written once and used everywhere, a **Site Style** generated in PHP, **every language and direction** (RTL, Arabic and Kurdish built in), **menus and SEO**, and ready-made **starter home pages**.
+The public side of a FloCMS website: **components** written once and used everywhere, a **Site Style** generated in PHP, **every language and direction** (RTL, Arabic and Kurdish built in), **menus and SEO**, ready-made **starter home pages**, and **collections** such as a blog or a shop catalogue.
 
 - **One component, used everywhere.** A component is a PHP class with its fields, plus a template. Use it in your templates (`@component('hero', [...])`); when [flocms-admin](https://github.com/hostkurd/flocms-admin) is installed, the same component is a Builder block that editors place on pages. Nothing is written twice.
 - **Server-rendered, works on plain cPanel hosting.** No Node and no build step on the server. Pages work without JavaScript; a little vanilla JS loads only for the components on the page.
@@ -23,13 +23,14 @@ php flo site:install
 - [SEO and the page head](#seo-and-the-page-head)
 - [Cookie notice and scripts](#cookie-notice-and-scripts)
 - [Sitemap](#sitemap)
+- [Collections: blog and shop](#collections-blog-and-shop)
 - [Starter home pages](#starter-home-pages)
 - [With flocms-admin](#with-flocms-admin)
 - [Commands](#commands)
 - [Removing the package](#removing-the-package)
 - [Roadmap](#roadmap)
 
-Guides: [Components](docs/components.md) · [Site Style](docs/style.md)
+Guides: [Components](docs/components.md) · [Site Style](docs/style.md) · [Collections](docs/collections.md)
 
 ## Requirements
 
@@ -179,6 +180,28 @@ Sitemap::add(fn () => [['loc' => '/services', 'lastmod' => '2026-11-01', 'altern
 
 There is one sitemap: with flocms-admin's Pages and sitemap on, these addresses join the admin's `/sitemap.xml`; without them, the package serves `/sitemap.xml` itself.
 
+## Collections: blog and shop
+
+A collection is a set of items with their own pages: a blog, a shop catalogue, projects, a team. One class describes its fields. The package gives it:
+
+- a list page with search, filters, sorting and pages;
+- category and tag pages, and a page for each item;
+- an RSS feed, sitemap entries, canonical and hreflang links, and schema.org data;
+- all of it in every language, each item with its own address per language.
+
+```
+php flo site:collection --kit=blog      Posts and PostCategories, at /blog
+php flo site:collection --kit=shop      Products and ProductCategories, at /shop
+php flo site:collection Projects        your own, at /projects (--markdown: kept as .md files)
+php flo migrate
+```
+
+- **Blog kit**: excerpt, cover, category, tags, featured post, reading time, older/newer post, share, RSS.
+- **Shop catalogue kit**: photos, price, availability, specs, categories up to 3 levels, price and category filters, and "Ask about this" to WhatsApp or your contact page. There is no cart.
+- **Pages you can change**: copy `list.html`, `group.html`, `item.html` or a part into `templates/<template>/collections/`.
+
+Items are added in the table for now; the admin screens come in 0.2.1. See the [Collections guide](docs/collections.md).
+
 ## Starter home pages
 
 Six ready-made home pages, all made of components: **Studio**, **Slider**, **Shop front**, **Journal**, **Landing page** and **Blank**, with sample text in English, Arabic and Kurdish.
@@ -206,16 +229,19 @@ With flocms-admin 0.43 or later installed, the package adds itself to the panel,
 | `php flo site:components` | Every component, where it comes from, which files the site changed |
 | `php flo site:style [--check] [--css]` | The style values and colours; `--check` reports contrast problems |
 | `php flo site:starter [name] [--force]` | Start the home page from a starter |
-| `php flo site:doctor` | Checks the setup and says what to fix |
+| `php flo site:collection [Name] --kit=blog\|shop [--path=] [--markdown]` | A collection: its classes, migrations and config line |
+| `php flo site:collections` | The collections, their addresses and tables |
+| `php flo site:doctor` | Checks the setup (and each collection's table) and says what to fix |
 
 ## Removing the package
 
-`composer remove hostkurd/flocms-frontend`, then point `APP_TEMPLATE` back at your own template (or remove the `site_*` calls from your layout). Your `config/frontend.php`, `components/` and template folder stay.
+`composer remove hostkurd/flocms-frontend`, then point `APP_TEMPLATE` back at your own template (or remove the `site_*` calls from your layout). Your `config/frontend.php`, `components/`, `collections/`, `content/` and template folder stay, and so do the collection tables.
 
 ## Roadmap
 
 - 0.1: components, Site Style, languages, menus and SEO, slider, starter picker, Builder blocks
 - 0.2: collections: blog and shop catalogue
+- 0.2.1: collections in flocms-admin (screens, publishing, preview), the Collection list Builder block, live starters
 - 0.3: site forms and the Form entries screen
 - 0.4: visitor accounts
 - Later: templates management, on-page editing, `php flo site:check`

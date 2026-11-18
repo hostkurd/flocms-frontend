@@ -1,0 +1,2 @@
+<?php $__items = []; foreach (array_slice($crumbs, 1, -1) as $__c) { $__items[] = ['label' => $__c['label'], 'url' => $__c['url']]; } $__last = end($crumbs); ?>
+{!! component('breadcrumbs', ['items' => $__items, 'current' => $__last['label'] ?? '']) !!}

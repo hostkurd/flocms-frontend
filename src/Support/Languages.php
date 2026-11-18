@@ -145,9 +145,21 @@ final class Languages
         return implode('/', $parts);
     }
 
+    /** @var array<string, string> lang => the page's address in that language (a post's own slug per language) */
+    private static array $switchUrls = [];
+
+    /** The page's address per language, for the language switcher (0.2). Reset per request. @param array<string, string> $urls */
+    public static function useSwitchUrls(array $urls): void
+    {
+        self::$switchUrls = $urls;
+    }
+
     /** The page being shown, in another language (for hreflang and the language switcher). */
     public static function switchUrl(string $lang): string
     {
+        if (isset(self::$switchUrls[$lang])) {
+            return self::$switchUrls[$lang];
+        }
         $query = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_QUERY);
         $path = self::currentPath();
         return Frontend::siteUri() . '/' . $lang . '/' . $path . ($query !== '' ? '?' . $query : '');

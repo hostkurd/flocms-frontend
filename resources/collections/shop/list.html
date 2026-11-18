@@ -1,0 +1,20 @@
+<?php $__browse = $query->page === 1 && $query->search === '' && $query->filterCount() === 0 && $groups !== []; ?>
+<div class="fe-container fe-collection">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+{!! site_part('page-head', ['title' => $title, 'lead' => $lead, 'search' => site_text('collections.search_in', ['name' => $title]), 'base' => $base, 'query' => $query]) !!}
+</div>
+@if($__browse)
+<section class="fe-section fe-section--surface fe-collection-tiles">
+<div class="fe-container">
+<h2>{{ site_text('collections.shop_by') }}</h2>
+<ul class="fe-collection-grid fe-collection-grid--tiles">
+@foreach($groups as $g)
+<li><a class="fe-tile" href="{{ $g['url'] }}">@if($g['image'] !== null)<span class="fe-media fe-ratio-4x3"><img src="{{ $g['image']['src'] }}" alt="" loading="lazy"></span>@else<span class="fe-media fe-media--placeholder fe-ratio-4x3">{!! site_icon('image', ['size' => 26, 'stroke' => 1.2]) !!}</span>@endif<span class="fe-tile__label">{{ $g['label'] }}<span>{{ site_number($g['count']) }}</span></span></a></li>
+@endforeach
+</ul>
+</div>
+</section>
+@endif
+<div class="fe-container fe-collection fe-collection--after">
+{!! site_part('shop-results', get_defined_vars()) !!}
+</div>

@@ -5,6 +5,8 @@ namespace FloCMS\Frontend\Console;
 
 use FloCMS\CLI\Console\Command;
 use FloCMS\Core\Config;
+use FloCMS\Frontend\Collections\Collections;
+use FloCMS\Frontend\Collections\Query;
 use FloCMS\Frontend\Components\Components;
 use FloCMS\Frontend\Frontend;
 use FloCMS\Frontend\Style\Style;
@@ -70,6 +72,24 @@ final class DoctorCommand extends Command
         foreach (array_keys(Frontend::CONTROLLERS) as $controller) {
             $class = 'FloCMS\\Controllers\\' . str_replace(' ', '', ucwords(str_replace('-', ' ', $controller))) . 'Controller';
             if (class_exists($class)) { $this->warning('The site\'s ' . $class . ' answers /' . $controller . '/ instead of the package.'); }
+        }
+
+        // Collections (0.2): their classes, addresses and tables
+        foreach (Collections::problems() as $problem) { $this->bad($problem); }
+        foreach (Collections::all() as $class) {
+            try {
+                $query = new Query();
+                $query->perPage = 1;
+                $total = $class::get()->source()->query($query)->total;
+                $this->ok('Collection ' . $class::name() . ($class::isPublic() ? ' at /' . $class::path() : '') . ': ' . $total . ' shown');
+            } catch (\Throwable $e) {
+                $this->bad('Collection ' . $class::name() . ' can\'t be read (' . $class::table() . '): php flo migrate? ' . $e->getMessage());
+            }
+            if ($class::isPublic()) {
+                $first = explode('/', $class::path())[0];
+                $controller = 'FloCMS\\Controllers\\' . str_replace(' ', '', ucwords(str_replace('-', ' ', $first))) . 'Controller';
+                if (class_exists($controller)) { $this->warning('The site\'s ' . $controller . ' answers /' . $first . '/ instead of the collection ' . $class::name() . '.'); }
+            }
         }
 
         if (class_exists(\FloCMS\Admin\Admin::class)) {

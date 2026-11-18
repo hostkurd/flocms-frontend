@@ -1,0 +1,8 @@
+<?php $__img = $item->image(); $__text = $item->get('excerpt') ?: $item->get('summary') ?: ''; ?>
+<article class="fe-post-card{{ !empty($featured) ? ' fe-post-card--featured' : '' }}">
+<a class="fe-media fe-ratio-4x3" href="{{ $item->url() }}" tabindex="-1" aria-hidden="true">@if($__img !== null)<img src="{{ $__img['src'] }}" alt="" loading="lazy">@endif</a>
+<div class="fe-post-card__body">
+<h{{ !empty($featured) ? '2' : '3' }} class="fe-post-card__title"><a href="{{ $item->url() }}">{{ $item->title() }}</a></h{{ !empty($featured) ? '2' : '3' }}>
+@if(is_string($__text) && $__text !== '')<p class="fe-muted">{{ $__text }}</p>@endif
+</div>
+</article>
