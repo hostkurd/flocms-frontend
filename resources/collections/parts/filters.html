@@ -1,0 +1,28 @@
+@if($filters !== [])
+<details class="fe-filters" open data-fe-filters>
+<summary class="fe-filters__toggle">{!! site_icon('sliders', ['size' => 18]) !!}<span>{{ site_text('collections.filters') }}@if($query->filterCount() > 0) ({{ site_number($query->filterCount()) }})@endif</span></summary>
+<form class="fe-filters__form" action="{{ $base }}" method="get">
+<div class="fe-filters__head"><h2 class="fe-filters__title">{{ site_text('collections.filters') }}</h2>@if($query->filterCount() > 0)<a href="{{ $query->search !== '' ? $base . '?q=' . rawurlencode($query->search) : $base }}">{{ site_text('collections.clear') }}</a>@endif<button type="button" class="fe-icon-button fe-filters__close" data-fe-filters-close aria-label="{{ site_text('dialog.close') }}">{!! site_icon('close', ['size' => 20]) !!}</button></div>
+<div class="fe-filters__groups">
+@if($query->search !== '')<input type="hidden" name="q" value="{{ $query->search }}">@endif
+@if($query->sort !== '')<input type="hidden" name="sort" value="{{ $query->sort }}">@endif
+@foreach($filters as $f)
+<fieldset class="fe-filters__group">
+<legend>{{ $f['label'] }}</legend>
+@if($f['type'] === 'range')
+<div class="fe-filters__range">
+<label>{{ site_text('collections.from') }} ({{ $f['currency'] }})<input type="number" name="{{ $f['name'] }}_from" min="0" step="any" inputmode="decimal" value="{{ $f['from'] !== null ? $f['from'] + 0 : '' }}"></label>
+<label>{{ site_text('collections.to') }} ({{ $f['currency'] }})<input type="number" name="{{ $f['name'] }}_to" min="0" step="any" inputmode="decimal" value="{{ $f['to'] !== null ? $f['to'] + 0 : '' }}"></label>
+</div>
+@else
+@foreach($f['options'] as $o)
+<label class="fe-check"><input type="checkbox" name="{{ $f['name'] }}[]" value="{{ $o['value'] }}"{!! $o['checked'] ? ' checked' : '' !!}><span>{{ $o['label'] }}</span><span class="fe-check__count">{{ site_number($o['count']) }}</span></label>
+@endforeach
+@endif
+</fieldset>
+@endforeach
+</div>
+<div class="fe-filters__apply"><button type="submit" class="fe-button fe-button--block">{{ site_text('collections.apply') }}</button></div>
+</form>
+</details>
+@endif

@@ -30,6 +30,8 @@ final class Seo
     private array $jsonLd = [];
     /** @var list<array{label: string, url: string}> */
     private array $breadcrumbs = [];
+    /** @var array<string, string>|null lang => address, for pages whose address differs per language (0.2) */
+    private ?array $alternates = null;
 
     public static function page(): self
     {
@@ -51,6 +53,15 @@ final class Seo
     public function jsonLd(array $data): self { $this->jsonLd[] = $data; return $this; }
     /** @param list<array{label: string, url: string}> $trail */
     public function breadcrumbs(array $trail): self { $this->breadcrumbs = $trail; return $this; }
+
+    /**
+     * The page's address in each language it is written in (a post with its
+     * own slug per language). hreflang lists only these; x-default is the
+     * default language's, or the first.
+     *
+     * @param array<string, string> $urls lang => address
+     */
+    public function alternates(array $urls): self { $this->alternates = $urls; return $this; }
 
     public function getTitle(): ?string { return $this->title; }
     public function getDescription(): ?string { return $this->description; }
@@ -81,7 +92,13 @@ final class Seo
             }
             $html .= '<link rel="canonical" href="' . Html::e($canonical) . '">' . "\n";
             $languages = Languages::all();
-            if (count($languages) > 1 && !$page->noindex) {
+            if ($page->alternates !== null && count($page->alternates) > 1 && !$page->noindex) {
+                foreach ($page->alternates as $lang => $url) {
+                    $html .= '<link rel="alternate" hreflang="' . Html::e($lang) . '" href="' . Html::e(self::absolute($url)) . '">' . "\n";
+                }
+                $default = $page->alternates[Languages::default()] ?? reset($page->alternates);
+                $html .= '<link rel="alternate" hreflang="x-default" href="' . Html::e(self::absolute((string) $default)) . '">' . "\n";
+            } elseif ($page->alternates === null && count($languages) > 1 && !$page->noindex) {
                 foreach ($languages as $lang) {
                     $html .= '<link rel="alternate" hreflang="' . Html::e($lang) . '" href="' . Html::e(self::withoutQuery(Languages::switchUrl($lang))) . '">' . "\n";
                 }

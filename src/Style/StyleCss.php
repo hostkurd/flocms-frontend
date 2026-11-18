@@ -23,7 +23,7 @@ final class StyleCss
     /** @return list<string> the files the CSS is made of (their changes give the file a new name) */
     public static function sources(): array
     {
-        $files = [Frontend::path('resources/css/base.css')];
+        $files = [Frontend::path('resources/css/base.css'), Frontend::path('resources/css/collections.css')];
         foreach (array_keys(Components::all()) as $name) {
             if (Components::cssInStyle($name)) {
                 $files[] = (string) Components::file($name, 'css');
@@ -58,6 +58,7 @@ final class StyleCss
             . '--flo-dark:var(--fe-band);--flo-light:var(--fe-surface);--flo-container:var(--fe-width);--flo-gutter:var(--fe-gutter);'
             . '--flo-block-gap:var(--fe-space-7);--flo-space-sm:var(--fe-space-4);--flo-space-md:var(--fe-space-6);--flo-space-lg:var(--fe-space-7);--flo-space-xl:var(--fe-section)}' . "\n";
         $css .= (string) @file_get_contents(Frontend::path('resources/css/base.css')) . "\n";
+        $css .= (string) @file_get_contents(Frontend::path('resources/css/collections.css')) . "\n";
         foreach (array_keys(Components::all()) as $name) {
             if (Components::cssInStyle($name)) {
                 $css .= '/* ' . $name . " */\n" . (string) @file_get_contents((string) Components::file($name, 'css')) . "\n";

@@ -1,0 +1,15 @@
+<div class="fe-collection-head">
+<div class="fe-collection-head__text">
+<h1>{{ $title }}</h1>
+@if($lead !== '')<p class="fe-lead">{{ $lead }}</p>@endif
+@if(!empty($count_text))<p class="fe-muted">{{ $count_text }}</p>@endif
+</div>
+@if(!empty($search))
+<form class="fe-collection-search" role="search" action="{{ $base }}" method="get">
+<label class="fe-visually-hidden" for="fe-collection-q">{{ $search }}</label>
+{!! site_icon('search', ['size' => 17]) !!}
+<input id="fe-collection-q" type="search" name="q" value="{{ $query->search }}" placeholder="{{ $search }}">
+<button type="submit" class="fe-visually-hidden">{{ site_text('collections.search') }}</button>
+</form>
+@endif
+</div>

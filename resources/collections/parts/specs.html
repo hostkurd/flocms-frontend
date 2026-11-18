@@ -1,0 +1,8 @@
+@if($pairs !== [])
+<div class="fe-specs">
+<h2 class="fe-specs__title">{{ site_text('collections.specs') }}</h2>
+<table><tbody>
+@foreach($pairs as $p)<tr><th scope="row">{{ $p['label'] }}</th><td>{{ $p['value'] }}</td></tr>@endforeach
+</tbody></table>
+</div>
+@endif

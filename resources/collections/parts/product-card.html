@@ -1,0 +1,6 @@
+<?php $__img = $item->image(); $__a = (string) $item->get('availability'); ?>
+<article class="fe-product-card{{ $__a === 'out_of_stock' ? ' fe-product-card--out' : '' }}">
+<a class="fe-media fe-ratio-1x1" href="{{ $item->url() }}" tabindex="-1" aria-hidden="true">@if($__img !== null)<img src="{{ $__img['src'] }}" alt="" loading="lazy">@endif @if($__a === 'made_to_order' || $__a === 'out_of_stock')<span class="fe-badge fe-product-card__badge">{{ site_text('collections.' . $__a) }}</span>@endif</a>
+<h3 class="fe-product-card__title"><a href="{{ $item->url() }}">{{ $item->title() }}</a></h3>
+<p class="fe-product-card__price{{ $item->get('price') === null ? ' fe-muted' : '' }}">{{ \FloCMS\Frontend\Collections\Kits\ShopProducts::priceText($item) }}</p>
+</article>

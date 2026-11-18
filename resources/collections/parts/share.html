@@ -1,0 +1,8 @@
+<?php $__u = rawurlencode(\FloCMS\Frontend\Seo\Seo::absolute($url)); $__t = rawurlencode($title); ?>
+<div class="fe-share">
+<span class="fe-share__label">{{ site_text('collections.share') }}</span>
+<button type="button" class="fe-share__link" data-fe-copy="{{ \FloCMS\Frontend\Seo\Seo::absolute($url) }}" data-fe-copied="{{ site_text('collections.copied') }}" hidden>{!! site_icon('link', ['size' => 16]) !!}<span>{{ site_text('collections.copy_link') }}</span></button>
+<a class="fe-share__link" href="https://wa.me/?text={{ $__t }}%20{{ $__u }}" target="_blank" rel="noopener noreferrer">{!! site_icon('whatsapp', ['size' => 16]) !!}WhatsApp</a>
+<a class="fe-share__link" href="https://www.facebook.com/sharer/sharer.php?u={{ $__u }}" target="_blank" rel="noopener noreferrer">{!! site_icon('facebook', ['size' => 16]) !!}Facebook</a>
+<a class="fe-share__link" href="mailto:?subject={{ $__t }}&amp;body={{ $__u }}">{!! site_icon('mail', ['size' => 16]) !!}{{ site_text('collections.email') }}</a>
+</div>

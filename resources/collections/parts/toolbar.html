@@ -1,0 +1,29 @@
+<div class="fe-collection-toolbar">
+<p class="fe-muted" role="status">@if($query->search !== ''){{ site_text('collections.results', ['q' => $query->search]) }} · @endif{{ site_text($count_word, ['count' => site_number($result->total)]) }}</p>
+@if(count($sorts) > 1)
+<form class="fe-collection-sort" action="{{ $base }}" method="get">
+@foreach($query->filters as $__f => $__vals)@foreach($__vals as $__v)<input type="hidden" name="{{ $__f }}[]" value="{{ $__v }}">@endforeach @endforeach
+@if($query->search !== '')<input type="hidden" name="q" value="{{ $query->search }}">@endif
+@if($query->range !== null && $query->rangeField !== null)@if($query->range[0] !== null)<input type="hidden" name="{{ $query->rangeField }}_from" value="{{ $query->range[0] + 0 }}">@endif @if($query->range[1] !== null)<input type="hidden" name="{{ $query->rangeField }}_to" value="{{ $query->range[1] + 0 }}">@endif @endif
+<label for="fe-collection-sort">{{ site_text('collections.sort') }}</label>
+<select id="fe-collection-sort" name="sort" onchange="this.form.submit()">@foreach($sorts as $s)<option value="{{ $s['value'] }}"{!! $s['selected'] ? ' selected' : '' !!}>{{ $s['label'] }}</option>@endforeach</select>
+<noscript><button type="submit" class="fe-button fe-button--outline fe-button--small">{{ site_text('collections.sort') }}</button></noscript>
+</form>
+@endif
+</div>
+@if($query->filterCount() > 0)
+<ul class="fe-filter-chips">
+@foreach($filters as $f)
+@if($f['type'] === 'range' && ($f['from'] !== null || $f['to'] !== null))
+<?php $__label = ($f['from'] !== null ? site_money($f['from'], $f['currency']) : '') . '–' . ($f['to'] !== null ? site_money($f['to'], $f['currency']) : ''); ?>
+<li><a href="{{ $query->link($base, [$f['name'] . '_from' => null, $f['name'] . '_to' => null]) }}" aria-label="{{ site_text('collections.remove', ['label' => $__label]) }}"><bdi>{{ $__label }}</bdi>{!! site_icon('close', ['size' => 14]) !!}</a></li>
+@elseif($f['type'] === 'checkboxes')
+@foreach($f['options'] as $o)@if($o['checked'])
+<?php $__rest = array_values(array_diff($query->filters[$f['name']] ?? [], [$o['value']])); ?>
+<li><a href="{{ $query->link($base, [$f['name'] => $__rest === [] ? null : $__rest]) }}" aria-label="{{ site_text('collections.remove', ['label' => $o['label']]) }}">{{ $o['label'] }}{!! site_icon('close', ['size' => 14]) !!}</a></li>
+@endif @endforeach
+@endif
+@endforeach
+<li><a class="fe-filter-chips__clear" href="{{ $query->search !== '' ? $base . '?q=' . rawurlencode($query->search) : $base }}">{{ site_text('collections.clear') }}</a></li>
+</ul>
+@endif

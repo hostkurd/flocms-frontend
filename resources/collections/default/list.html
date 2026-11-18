@@ -1,0 +1,27 @@
+<?php $__cards = $featured !== null ? array_slice($items, 1) : $items; ?>
+<div class="fe-container fe-collection">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+{!! site_part('page-head', ['title' => $title, 'lead' => $lead, 'search' => site_text('collections.search_in', ['name' => $title]), 'base' => $base, 'query' => $query]) !!}
+{!! site_part('category-nav', ['collection' => $collection, 'groups' => $groups, 'total' => $result->total + 0, 'rss' => $collection::hasFeed()]) !!}
+</div>
+@if($featured !== null)
+<section class="fe-section fe-section--surface fe-collection-featured">
+<div class="fe-container">{!! site_part('item-card', ['item' => $featured, 'collection' => $collection, 'featured' => true]) !!}</div>
+</section>
+@endif
+<div class="fe-container fe-collection fe-collection--after">
+@if($result->isEmpty())
+@if($query->search !== '')
+{!! site_part('empty', ['heading' => site_text('collections.no_results_search', ['q' => $query->search]), 'text' => site_text('collections.no_results_text'), 'searching' => true, 'action' => ['url' => $base, 'label' => site_text('collections.clear')]]) !!}
+@else
+{!! site_part('empty', ['heading' => site_text('collections.empty'), 'text' => site_text('collections.no_items_text'), 'action' => $collection::hasFeed() ? ['url' => $base . '/feed.xml', 'label' => site_text('collections.rss'), 'icon' => 'rss'] : null]) !!}
+@endif
+@else
+@if($__cards !== [])
+<div class="fe-collection-grid fe-collection-grid--posts">
+@foreach($__cards as $item){!! site_part('item-card', ['item' => $item, 'collection' => $collection]) !!}@endforeach
+</div>
+@endif
+{!! component('pagination', ['page' => $pager['page'], 'pages' => $pager['pages'], 'url' => $pager['url'], 'class' => 'fe-collection-pages']) !!}
+@endif
+</div>

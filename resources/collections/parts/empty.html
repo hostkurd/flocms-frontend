@@ -1,0 +1,9 @@
+<div class="fe-collection-empty">
+<span class="fe-collection-empty__icon" aria-hidden="true">{!! site_icon(!empty($searching) ? 'search' : 'file', ['size' => 24]) !!}</span>
+<h2>{{ $heading }}</h2>
+<p class="fe-muted">{{ $text }}</p>
+@if(!empty($links))
+<ul class="fe-collection-empty__links">@foreach($links as $l)<li><a class="fe-button fe-button--outline fe-button--small" href="{{ $l['url'] }}">{{ $l['label'] }}</a></li>@endforeach</ul>
+@endif
+@if(!empty($action))<a class="{{ !empty($action['button']) ? 'fe-button' : 'fe-link-arrow' }}" href="{{ $action['url'] }}">@if(!empty($action['icon'])){!! site_icon($action['icon'], ['size' => 16]) !!}@endif{{ $action['label'] }}</a>@endif
+</div>

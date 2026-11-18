@@ -1,0 +1,13 @@
+<div class="fe-container fe-collection">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+{!! site_part('page-head', ['title' => $title, 'lead' => $lead, 'count_text' => site_text('collections.products', ['count' => site_number($result->total)]), 'base' => $base, 'query' => $query]) !!}
+@if($children !== [])
+<ul class="fe-subgroups">
+<li><a href="{{ $base }}" aria-current="page">{{ site_text('collections.all_in', ['name' => $title]) }}<span>{{ site_number($result->total) }}</span></a></li>
+@foreach($children as $c)<li><a href="{{ $c['url'] }}">{{ $c['label'] }}<span>{{ site_number($c['count']) }}</span></a></li>@endforeach
+</ul>
+@endif
+</div>
+<div class="fe-container fe-collection fe-collection--after">
+{!! site_part('shop-results', get_defined_vars()) !!}
+</div>

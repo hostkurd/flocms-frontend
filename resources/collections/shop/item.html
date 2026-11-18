@@ -1,0 +1,53 @@
+<?php $__imgs = $item->get('images'); $__imgs = is_array($__imgs) ? $__imgs : []; $__a = (string) $item->get('availability'); $__shop = \FloCMS\Frontend\Frontend::config()->shop(); $__summary = $item->get('summary'); $__body = $item->get('body'); ?>
+<div class="fe-container fe-collection">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+<div class="fe-product">
+<div class="fe-product__gallery" data-fe-product-gallery>
+@if($__imgs === [])
+<div class="fe-media fe-media--placeholder fe-ratio-4x3" role="img" aria-label="{{ site_text('photo') }}">{!! site_icon('image', ['size' => 30, 'stroke' => 1.2]) !!}</div>
+@else
+<div class="fe-product__photos">
+<ul class="fe-product__track" data-fe-track>
+@foreach($__imgs as $i => $img)<li id="fe-photo-{{ $i + 1 }}" class="fe-media fe-ratio-4x3"><img src="{{ $img['src'] }}" alt="{{ $img['alt'] !== '' ? $img['alt'] : $title }}"{!! $i > 0 ? ' loading="lazy"' : '' !!}></li>@endforeach
+</ul>
+@if(count($__imgs) > 1)
+<button type="button" class="fe-product__step fe-product__prev" data-fe-step="-1" aria-label="{{ site_text('pagination.previous') }}" hidden>{!! site_icon('chevron-left', ['size' => 18]) !!}</button>
+<button type="button" class="fe-product__step fe-product__next" data-fe-step="1" aria-label="{{ site_text('pagination.next') }}" hidden>{!! site_icon('chevron-right', ['size' => 18]) !!}</button>
+<span class="fe-product__count" dir="ltr" data-fe-count>1 / {{ count($__imgs) }}</span>
+@endif
+</div>
+@if(count($__imgs) > 1)
+<ul class="fe-product__thumbs">
+@foreach($__imgs as $i => $img)<li><a href="#fe-photo-{{ $i + 1 }}" class="fe-media fe-ratio-4x3"{!! $i === 0 ? ' aria-current="true"' : '' !!} aria-label="{{ site_text('collections.photo', ['number' => site_number($i + 1), 'total' => site_number(count($__imgs))]) }}"><img src="{{ $img['src'] }}" alt="" loading="lazy"></a></li>@endforeach
+</ul>
+@endif
+@endif
+</div>
+<div class="fe-product__info">
+<div class="fe-product__head">
+@if($group !== null)<a class="fe-eyebrow fe-product__group" href="{{ $group_url }}">{{ $group->title() }}</a>@endif
+<h1>{{ $title }}</h1>
+<p class="fe-product__price{{ $item->get('price') === null ? ' fe-muted' : '' }}">{{ \FloCMS\Frontend\Collections\Kits\ShopProducts::priceText($item) }}</p>
+@if($__a !== '')<p class="fe-availability fe-availability--{{ $__a }}"><span aria-hidden="true"></span>{{ site_text('collections.' . $__a) }}</p>@endif
+</div>
+@if(is_string($__summary) && $__summary !== '')<p class="fe-lead">{{ $__summary }}</p>@endif
+<div class="fe-product__ask">
+<a class="fe-button fe-button--large fe-button--block" href="{{ $ask }}"{!! str_starts_with($ask, 'https://wa.me/') ? ' target="_blank" rel="noopener noreferrer"' : '' !!}>{!! site_icon($__shop['whatsapp'] !== '' ? 'whatsapp' : 'mail', ['size' => 18]) !!}{{ site_text('collections.ask') }}</a>
+<p class="fe-muted">{{ site_text($__shop['whatsapp'] !== '' ? 'collections.ask_whatsapp' : 'collections.ask_page') }}</p>
+</div>
+{!! site_part('share', ['url' => $item->url(), 'title' => $title]) !!}
+{!! site_part('specs', ['pairs' => is_array($item->get('specs')) ? $item->get('specs') : []]) !!}
+</div>
+</div>
+@if(is_string($__body) && trim(strip_tags($__body)) !== '')
+<section class="fe-product__details"><h2>{{ site_text('collections.details') }}</h2><div class="fe-prose">{!! $__body !!}</div></section>
+@endif
+</div>
+@if($related !== [])
+<section class="fe-section fe-section--surface">
+<div class="fe-container">
+<h2 class="fe-collection-related__title">{{ site_text('collections.related_products') }}</h2>
+<div class="fe-collection-grid fe-collection-grid--related">@foreach($related as $r){!! site_part('product-card', ['item' => $r, 'collection' => $collection]) !!}@endforeach</div>
+</div>
+</section>
+@endif

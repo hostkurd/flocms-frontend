@@ -1,0 +1,18 @@
+<div class="fe-collection-layout{{ $filters === [] ? ' fe-collection-layout--single' : '' }}">
+@if($filters !== [])<aside class="fe-collection-layout__aside">{!! site_part('filters', ['filters' => $filters, 'query' => $query, 'base' => $base]) !!}</aside>@endif
+<div class="fe-collection-layout__main">
+@if($result->isEmpty() && $query->search === '' && $query->filterCount() === 0)
+{!! site_part('empty', ['heading' => site_text('collections.empty_shop'), 'text' => site_text('collections.empty_shop_text')]) !!}
+@else
+{!! site_part('toolbar', ['query' => $query, 'result' => $result, 'sorts' => $sorts, 'filters' => $filters, 'base' => $base, 'count_word' => 'collections.products']) !!}
+@if($result->isEmpty())
+{!! site_part('empty', ['heading' => $query->search !== '' ? site_text('collections.no_results_search', ['q' => $query->search]) : site_text('collections.no_results'), 'text' => site_text('collections.no_results_text') . ($groups !== [] ? ' ' . site_text('collections.browse') : ''), 'searching' => true, 'links' => array_map(static fn (array $g): array => ['url' => $g['url'], 'label' => $g['label']], $groups), 'action' => ['url' => $base, 'label' => site_text('collections.clear'), 'button' => true]]) !!}
+@else
+<div class="fe-collection-grid fe-collection-grid--products">
+@foreach($items as $item){!! site_part('product-card', ['item' => $item, 'collection' => $collection]) !!}@endforeach
+</div>
+{!! component('pagination', ['page' => $pager['page'], 'pages' => $pager['pages'], 'url' => $pager['url'], 'class' => 'fe-collection-pages']) !!}
+@endif
+@endif
+</div>
+</div>

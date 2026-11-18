@@ -64,11 +64,13 @@
                 "FloCMS\\Frontend\\Console\\StyleCommand",
                 "FloCMS\\Frontend\\Console\\StarterCommand",
                 "FloCMS\\Frontend\\Console\\DoctorCommand",
-                "FloCMS\\Frontend\\Console\\ComponentsCommand"
+                "FloCMS\\Frontend\\Console\\ComponentsCommand",
+                "FloCMS\\Frontend\\Console\\CollectionCommand",
+                "FloCMS\\Frontend\\Console\\CollectionsCommand"
             ]
         },
         "branch-alias": {
-            "dev-main": "0.1-dev"
+            "dev-main": "0.2-dev"
         }
     },
     "scripts": {

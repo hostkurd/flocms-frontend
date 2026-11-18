@@ -18,7 +18,7 @@ use FloCMS\Frontend\Seo\Sitemap;
  */
 final class Frontend
 {
-    public const VERSION = '0.1.4';
+    public const VERSION = '0.2.0';
 
     /** The package's addresses on the default route. A site controller of the same name wins. */
     public const CONTROLLERS = [
@@ -43,7 +43,11 @@ final class Frontend
         // /sitemap.xml when flocms-admin doesn't serve it (D12)
         if (method_exists(App::class, 'fallbackUsing')) {
             App::fallbackUsing(static fn (string $path, \FloCMS\Core\Http\Request $request): ?\FloCMS\Core\Http\Response => Sitemap::fallback($path, $request));
+            // Collections' pages: /en/blog, /en/blog/<slug>, … (0.2)
+            App::fallbackUsing(static fn (string $path, \FloCMS\Core\Http\Request $request): ?\FloCMS\Core\Http\Response => Collections\CollectionPages::fallback($path, $request));
         }
+        Collections\Collections::registerAutoload();
+        Collections\Feed::registerSitemap();
         if (class_exists(\FloCMS\Admin\Admin::class) && method_exists(\FloCMS\Admin\Admin::class, 'extend')) {
             Admin\AdminBridge::register();
         }
@@ -177,5 +181,7 @@ final class Frontend
         Seo\Sitemap::reset();
         Seo\Scripts::reset();
         Menus\Menus::reset();
+        Collections\Collections::reset();
+        Support\Languages::useSwitchUrls([]);
     }
 }

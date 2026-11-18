@@ -1,0 +1,15 @@
+<div class="fe-container fe-collection">
+{!! site_part('crumbs', ['crumbs' => $crumbs]) !!}
+{!! site_part('page-head', ['title' => $group !== null ? $title : site_text('collections.tagged', ['tag' => $title]), 'lead' => $lead, 'count_text' => site_text('collections.posts', ['count' => site_number($result->total)]), 'base' => $base, 'query' => $query]) !!}
+@if($group !== null){!! site_part('category-nav', ['collection' => $collection, 'groups' => $groups, 'total' => array_sum(array_column($groups, 'count')), 'current' => true, 'rss' => $collection::hasFeed()]) !!}@endif
+</div>
+<div class="fe-container fe-collection fe-collection--after">
+@if($result->isEmpty())
+{!! site_part('empty', ['heading' => site_text('collections.empty'), 'text' => site_text('collections.no_items_text'), 'action' => ['url' => $collection::url(), 'label' => $collection::label()]]) !!}
+@else
+<div class="fe-collection-grid fe-collection-grid--posts">
+@foreach($items as $item){!! site_part('item-card', ['item' => $item, 'collection' => $collection]) !!}@endforeach
+</div>
+{!! component('pagination', ['page' => $pager['page'], 'pages' => $pager['pages'], 'url' => $pager['url'], 'class' => 'fe-collection-pages']) !!}
+@endif
+</div>
